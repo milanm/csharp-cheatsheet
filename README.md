@@ -498,287 +498,6 @@ public void Display(int value, string format)
 - [Extension methods (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/extension-methods)
 - [Lambda expressions (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/lambda-expressions)
 
-<div id="collections"></div>
-
-# Collections
-
-Collections in C# provide powerful ways to store, manage, and manipulate groups of related objects. The .NET framework offers various collection types optimized for different scenarios, from simple arrays to complex specialized collections. Choosing the right collection type is essential for writing efficient and maintainable code.
-
-## Collection Expressions (C# 12+)
-
-Collection expressions are a concise way to initialize collections, introduced in C# 12. They provide a unified syntax for creating and initializing different collection types.
-
-```csharp
-// Creating collections with the new collection expressions syntax
-int[] numbers = [1, 2, 3, 4, 5];                   // Array
-List<string> names = ["Alice", "Bob", "Charlie"];  // List
-HashSet<char> letters = ['a', 'b', 'c'];           // HashSet
-Dictionary<string, int> ages = [                   // Dictionary
-    "Alice" => 30,
-    "Bob" => 25,
-    "Charlie" => 35
-];
-
-// Spread operator - combining collections
-int[] moreNumbers = [0, .. numbers, 6];     // [0, 1, 2, 3, 4, 5, 6]
-string[] firstThree = [.. names[0..3]];     // ["Alice", "Bob", "Charlie"]
-
-// Pattern matching with collection expressions
-bool IsValidPoint(int[] point) => point is [var x, var y] && x >= 0 && y >= 0;
-```
-
-## Arrays
-
-Arrays are fixed-size collections of elements of the same type. They provide efficient random access but have a predetermined size that cannot change after creation.
-
-```csharp
-// Declaration and initialization
-int[] numbers = new int[5];                      // Array of 5 integers with default values (0)
-int[] initialized = new int[] { 1, 2, 3, 4, 5 }; // Initialized array
-int[] shorthand = { 1, 2, 3, 4, 5 };             // Shorthand initialization
-string[] names = { "Alice", "Bob", "Charlie" };
-
-// Accessing elements
-int firstNumber = numbers[0];                     // First element (zero-based indexing)
-numbers[0] = 10;                                  // Assign value to first element
-
-// Multi-dimensional arrays
-int[,] matrix = new int[3, 3];                    // 3x3 2D array
-matrix[0, 0] = 1;                                 // Assign to specific position
-int[,] initialized2D = {                          // Initialize 2D array
-    { 1, 2, 3 },
-    { 4, 5, 6 },
-    { 7, 8, 9 }
-};
-
-// Jagged arrays (arrays of arrays)
-int[][] jagged = new int[3][];
-jagged[0] = new int[] { 1, 2, 3 };
-jagged[1] = new int[] { 4, 5 };
-jagged[2] = new int[] { 6, 7, 8, 9 };
-
-// Array properties and methods
-int length = numbers.Length;                      // Number of elements
-Array.Sort(numbers);                              // Sort array in-place
-Array.Reverse(numbers);                           // Reverse array in-place
-int index = Array.IndexOf(names, "Bob");          // Find index of element
-bool exists = Array.Exists(numbers, n => n > 10); // Check if condition exists
-```
-
-## Lists
-
-Lists are dynamic arrays that can grow or shrink in size. They provide flexibility and are generally the go-to collection type for most scenarios when you need a sequence of elements.
-
-```csharp
-using System.Collections.Generic;
-
-// Create a list
-List<string> names = new List<string>();          // Empty list
-List<int> numbers = new List<int> { 1, 2, 3 };    // Initialized list
-
-// Add elements  
-names.Add("Alice");                               // Add single element
-names.AddRange(new[] { "Bob", "Charlie" });       // Add multiple elements
-
-// Access elements
-string first = names[0];                          // Access by index
-names[0] = "Alicia";                              // Modify by index
-
-// Remove elements
-names.Remove("Bob");                              // Remove specific element
-names.RemoveAt(0);                                // Remove element at index
-names.RemoveAll(x => x.StartsWith("C"));          // Remove all that match condition
-names.Clear();                                    // Remove all elements
-
-// Search and query
-bool contains = numbers.Contains(2);              // Check if contains value
-int index = numbers.IndexOf(3);                   // Find index of element
-List<int> filtered = numbers.FindAll(n => n > 1); // Find all matching elements
-int found = numbers.Find(n => n > 2);             // Find first matching element
-
-// Other operations
-int count = numbers.Count;                       // Number of elements
-numbers.Sort();                                  // Sort list in-place
-numbers.Reverse();                               // Reverse list in-place
-numbers.ForEach(n => Console.WriteLine(n));      // Perform action on each element
-```
-
-## Dictionary
-
-Dictionaries store key-value pairs for fast lookups by key. They are essential when you need to quickly access values based on unique identifiers.
-
-```csharp
-using System.Collections.Generic;
-
-// Create a dictionary
-Dictionary<string, int> ages = new Dictionary<string, int>();
-Dictionary<string, string> capitals = new Dictionary<string, string>
-{
-    { "USA", "Washington D.C." },
-    { "UK", "London" },
-    ["France"] = "Paris"              // Alternative initialization syntax
-};
-
-// Add entries
-ages.Add("Alice", 30);
-ages["Bob"] = 25;                     // Add or update using indexer
-
-// Access values
-int aliceAge = ages["Alice"];         // Access by key (throws if not found)
-bool success = ages.TryGetValue("Charlie", out int charlieAge); // Safe access
-
-// Check existence
-bool containsKey = ages.ContainsKey("Alice");
-bool containsValue = ages.ContainsValue(25);
-
-// Remove entries
-bool removed = ages.Remove("Bob");
-
-// Iterate through dictionary
-foreach (KeyValuePair<string, int> pair in ages)
-{
-    Console.WriteLine($"{pair.Key}: {pair.Value}");
-}
-
-// Or using deconstruction (C# 7.0+)
-foreach (var (name, age) in ages)
-{
-    Console.WriteLine($"{name}: {age}");
-}
-```
-
-## HashSet
-
-HashSets store unique elements with fast lookup, insertion, and deletion. They're ideal for maintaining collections of unique items or performing set operations.
-
-```csharp
-using System.Collections.Generic;
-
-// Create a HashSet
-HashSet<int> uniqueNumbers = new HashSet<int>();
-HashSet<string> fruits = new HashSet<string> { "Apple", "Banana", "Orange" };
-
-// Add elements
-uniqueNumbers.Add(1);                 // Returns true if added
-uniqueNumbers.Add(1);                 // Returns false (already exists)
-uniqueNumbers.UnionWith(new[] { 2, 3, 4 }); // Add multiple elements
-
-// Check membership
-bool contains = fruits.Contains("Apple"); // Fast lookup
-
-// Remove elements
-bool removed = fruits.Remove("Banana");
-
-// Set operations
-HashSet<int> setA = new HashSet<int> { 1, 2, 3 };
-HashSet<int> setB = new HashSet<int> { 3, 4, 5 };
-
-setA.UnionWith(setB);                 // Union: { 1, 2, 3, 4, 5 }
-setA.IntersectWith(setB);             // Intersection: { 3 }
-setA.ExceptWith(setB);                // Difference: { 1, 2 }
-setA.SymmetricExceptWith(setB);       // Symmetric difference: { 1, 2, 4, 5 }
-
-bool isSubset = setA.IsSubsetOf(setB);
-bool isSuperset = setA.IsSupersetOf(setB);
-```
-
-## Queue and Stack
-
-Queues (FIFO - first in, first out) and Stacks (LIFO - last in, first out) are specialized collections that support specific access patterns common in many algorithms and data processing scenarios.
-
-```csharp
-using System.Collections.Generic;
-
-// Queue (First In, First Out)
-Queue<string> queue = new Queue<string>();
-queue.Enqueue("First");               // Add to end
-queue.Enqueue("Second");
-queue.Enqueue("Third");
-
-string next = queue.Peek();           // View next item without removing
-string dequeued = queue.Dequeue();    // Remove and return next item
-int count = queue.Count;              // Number of items
-bool contains = queue.Contains("Second");
-
-// Stack (Last In, First Out)
-Stack<int> stack = new Stack<int>();
-stack.Push(1);                        // Add to top
-stack.Push(2);
-stack.Push(3);
-
-int top = stack.Peek();               // View top item without removing
-int popped = stack.Pop();             // Remove and return top item
-int stackCount = stack.Count;         // Number of items
-bool stackContains = stack.Contains(2);
-```
-
-## LINQ (Language Integrated Query)
-
-LINQ provides powerful query capabilities for collections, making it easier to filter, transform, and aggregate data. It brings database-like query operations to in-memory collections.
-
-```csharp
-using System.Linq;
-
-List<int> numbers = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-
-// Filtering
-var evens = numbers.Where(n => n % 2 == 0);        // [2, 4, 6, 8, 10]
-var greaterThanFive = numbers.Where(n => n > 5);   // [6, 7, 8, 9, 10]
-
-// Transformation
-var doubled = numbers.Select(n => n * 2);          // [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
-var numberObjects = numbers.Select(n => new { Value = n, IsEven = n % 2 == 0 });
-
-// Ordering
-var ascending = numbers.OrderBy(n => n);           // [1, 2, 3, ...]
-var descending = numbers.OrderByDescending(n => n); // [10, 9, 8, ...]
-var complex = numbers.OrderBy(n => n % 3).ThenByDescending(n => n); // Multiple criteria
-
-// Aggregation
-int sum = numbers.Sum();                           // 55
-int min = numbers.Min();                           // 1
-int max = numbers.Max();                           // 10
-double average = numbers.Average();                // 5.5
-int product = numbers.Aggregate((a, b) => a * b);  // 3628800 (factorial of 10)
-
-// Quantifiers
-bool allEven = numbers.All(n => n % 2 == 0);       // false
-bool anyEven = numbers.Any(n => n % 2 == 0);       // true
-bool containsSeven = numbers.Contains(7);          // true
-
-// Partitioning
-var firstThree = numbers.Take(3);                  // [1, 2, 3]
-var skipFirstThree = numbers.Skip(3);              // [4, 5, 6, 7, 8, 9, 10]
-var takeLast = numbers.TakeLast(2);                // [9, 10]
-var skipLast = numbers.SkipLast(2);                // [1, 2, 3, 4, 5, 6, 7, 8]
-
-// Element operations
-int first = numbers.First();                       // 1
-int firstEven = numbers.First(n => n % 2 == 0);    // 2
-int lastOdd = numbers.Last(n => n % 2 != 0);       // 9
-int single = numbers.Where(n => n == 5).Single();  // 5
-
-// Grouping
-var groups = numbers.GroupBy(n => n % 3);          // Groups by remainder when divided by 3
-foreach (var group in groups)
-{
-    Console.WriteLine($"Remainder {group.Key}: {string.Join(", ", group)}");
-}
-
-// Query syntax (alternative to method syntax)
-var queryResult = from n in numbers
-                  where n > 5
-                  orderby n descending
-                  select n * 2;
-```
-
-**Additional Resources:**
-- [Collections overview (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/collections/)
-- [Collection expressions (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/collection-expressions)
-- [LINQ (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/)
-- [Choosing a collection type (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/collections/selecting-a-collection-class)
-- [System.Collections.Generic Namespace (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic)
-
 <div id="data-types"></div>
 
 # Data types
@@ -1390,6 +1109,287 @@ When designing class hierarchies, consider these guidelines:
 - [Primary constructors (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-12.0/primary-constructors)
 - [C# object-oriented programming best practices (Microsoft Learn)](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/object-oriented-programming)
 
+
+<div id="collections"></div>
+
+# Collections
+
+Collections in C# provide powerful ways to store, manage, and manipulate groups of related objects. The .NET framework offers various collection types optimized for different scenarios, from simple arrays to complex specialized collections. Choosing the right collection type is essential for writing efficient and maintainable code.
+
+## Collection Expressions (C# 12+)
+
+Collection expressions are a concise way to initialize collections, introduced in C# 12. They provide a unified syntax for creating and initializing different collection types.
+
+```csharp
+// Creating collections with the new collection expressions syntax
+int[] numbers = [1, 2, 3, 4, 5];                   // Array
+List<string> names = ["Alice", "Bob", "Charlie"];  // List
+HashSet<char> letters = ['a', 'b', 'c'];           // HashSet
+Dictionary<string, int> ages = [                   // Dictionary
+    "Alice" => 30,
+    "Bob" => 25,
+    "Charlie" => 35
+];
+
+// Spread operator - combining collections
+int[] moreNumbers = [0, .. numbers, 6];     // [0, 1, 2, 3, 4, 5, 6]
+string[] firstThree = [.. names[0..3]];     // ["Alice", "Bob", "Charlie"]
+
+// Pattern matching with collection expressions
+bool IsValidPoint(int[] point) => point is [var x, var y] && x >= 0 && y >= 0;
+```
+
+## Arrays
+
+Arrays are fixed-size collections of elements of the same type. They provide efficient random access but have a predetermined size that cannot change after creation.
+
+```csharp
+// Declaration and initialization
+int[] numbers = new int[5];                      // Array of 5 integers with default values (0)
+int[] initialized = new int[] { 1, 2, 3, 4, 5 }; // Initialized array
+int[] shorthand = { 1, 2, 3, 4, 5 };             // Shorthand initialization
+string[] names = { "Alice", "Bob", "Charlie" };
+
+// Accessing elements
+int firstNumber = numbers[0];                     // First element (zero-based indexing)
+numbers[0] = 10;                                  // Assign value to first element
+
+// Multi-dimensional arrays
+int[,] matrix = new int[3, 3];                    // 3x3 2D array
+matrix[0, 0] = 1;                                 // Assign to specific position
+int[,] initialized2D = {                          // Initialize 2D array
+    { 1, 2, 3 },
+    { 4, 5, 6 },
+    { 7, 8, 9 }
+};
+
+// Jagged arrays (arrays of arrays)
+int[][] jagged = new int[3][];
+jagged[0] = new int[] { 1, 2, 3 };
+jagged[1] = new int[] { 4, 5 };
+jagged[2] = new int[] { 6, 7, 8, 9 };
+
+// Array properties and methods
+int length = numbers.Length;                      // Number of elements
+Array.Sort(numbers);                              // Sort array in-place
+Array.Reverse(numbers);                           // Reverse array in-place
+int index = Array.IndexOf(names, "Bob");          // Find index of element
+bool exists = Array.Exists(numbers, n => n > 10); // Check if condition exists
+```
+
+## Lists
+
+Lists are dynamic arrays that can grow or shrink in size. They provide flexibility and are generally the go-to collection type for most scenarios when you need a sequence of elements.
+
+```csharp
+using System.Collections.Generic;
+
+// Create a list
+List<string> names = new List<string>();          // Empty list
+List<int> numbers = new List<int> { 1, 2, 3 };    // Initialized list
+
+// Add elements  
+names.Add("Alice");                               // Add single element
+names.AddRange(new[] { "Bob", "Charlie" });       // Add multiple elements
+
+// Access elements
+string first = names[0];                          // Access by index
+names[0] = "Alicia";                              // Modify by index
+
+// Remove elements
+names.Remove("Bob");                              // Remove specific element
+names.RemoveAt(0);                                // Remove element at index
+names.RemoveAll(x => x.StartsWith("C"));          // Remove all that match condition
+names.Clear();                                    // Remove all elements
+
+// Search and query
+bool contains = numbers.Contains(2);              // Check if contains value
+int index = numbers.IndexOf(3);                   // Find index of element
+List<int> filtered = numbers.FindAll(n => n > 1); // Find all matching elements
+int found = numbers.Find(n => n > 2);             // Find first matching element
+
+// Other operations
+int count = numbers.Count;                       // Number of elements
+numbers.Sort();                                  // Sort list in-place
+numbers.Reverse();                               // Reverse list in-place
+numbers.ForEach(n => Console.WriteLine(n));      // Perform action on each element
+```
+
+## Dictionary
+
+Dictionaries store key-value pairs for fast lookups by key. They are essential when you need to quickly access values based on unique identifiers.
+
+```csharp
+using System.Collections.Generic;
+
+// Create a dictionary
+Dictionary<string, int> ages = new Dictionary<string, int>();
+Dictionary<string, string> capitals = new Dictionary<string, string>
+{
+    { "USA", "Washington D.C." },
+    { "UK", "London" },
+    ["France"] = "Paris"              // Alternative initialization syntax
+};
+
+// Add entries
+ages.Add("Alice", 30);
+ages["Bob"] = 25;                     // Add or update using indexer
+
+// Access values
+int aliceAge = ages["Alice"];         // Access by key (throws if not found)
+bool success = ages.TryGetValue("Charlie", out int charlieAge); // Safe access
+
+// Check existence
+bool containsKey = ages.ContainsKey("Alice");
+bool containsValue = ages.ContainsValue(25);
+
+// Remove entries
+bool removed = ages.Remove("Bob");
+
+// Iterate through dictionary
+foreach (KeyValuePair<string, int> pair in ages)
+{
+    Console.WriteLine($"{pair.Key}: {pair.Value}");
+}
+
+// Or using deconstruction (C# 7.0+)
+foreach (var (name, age) in ages)
+{
+    Console.WriteLine($"{name}: {age}");
+}
+```
+
+## HashSet
+
+HashSets store unique elements with fast lookup, insertion, and deletion. They're ideal for maintaining collections of unique items or performing set operations.
+
+```csharp
+using System.Collections.Generic;
+
+// Create a HashSet
+HashSet<int> uniqueNumbers = new HashSet<int>();
+HashSet<string> fruits = new HashSet<string> { "Apple", "Banana", "Orange" };
+
+// Add elements
+uniqueNumbers.Add(1);                 // Returns true if added
+uniqueNumbers.Add(1);                 // Returns false (already exists)
+uniqueNumbers.UnionWith(new[] { 2, 3, 4 }); // Add multiple elements
+
+// Check membership
+bool contains = fruits.Contains("Apple"); // Fast lookup
+
+// Remove elements
+bool removed = fruits.Remove("Banana");
+
+// Set operations
+HashSet<int> setA = new HashSet<int> { 1, 2, 3 };
+HashSet<int> setB = new HashSet<int> { 3, 4, 5 };
+
+setA.UnionWith(setB);                 // Union: { 1, 2, 3, 4, 5 }
+setA.IntersectWith(setB);             // Intersection: { 3 }
+setA.ExceptWith(setB);                // Difference: { 1, 2 }
+setA.SymmetricExceptWith(setB);       // Symmetric difference: { 1, 2, 4, 5 }
+
+bool isSubset = setA.IsSubsetOf(setB);
+bool isSuperset = setA.IsSupersetOf(setB);
+```
+
+## Queue and Stack
+
+Queues (FIFO - first in, first out) and Stacks (LIFO - last in, first out) are specialized collections that support specific access patterns common in many algorithms and data processing scenarios.
+
+```csharp
+using System.Collections.Generic;
+
+// Queue (First In, First Out)
+Queue<string> queue = new Queue<string>();
+queue.Enqueue("First");               // Add to end
+queue.Enqueue("Second");
+queue.Enqueue("Third");
+
+string next = queue.Peek();           // View next item without removing
+string dequeued = queue.Dequeue();    // Remove and return next item
+int count = queue.Count;              // Number of items
+bool contains = queue.Contains("Second");
+
+// Stack (Last In, First Out)
+Stack<int> stack = new Stack<int>();
+stack.Push(1);                        // Add to top
+stack.Push(2);
+stack.Push(3);
+
+int top = stack.Peek();               // View top item without removing
+int popped = stack.Pop();             // Remove and return top item
+int stackCount = stack.Count;         // Number of items
+bool stackContains = stack.Contains(2);
+```
+
+## LINQ (Language Integrated Query)
+
+LINQ provides powerful query capabilities for collections, making it easier to filter, transform, and aggregate data. It brings database-like query operations to in-memory collections.
+
+```csharp
+using System.Linq;
+
+List<int> numbers = new List<int> { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+// Filtering
+var evens = numbers.Where(n => n % 2 == 0);        // [2, 4, 6, 8, 10]
+var greaterThanFive = numbers.Where(n => n > 5);   // [6, 7, 8, 9, 10]
+
+// Transformation
+var doubled = numbers.Select(n => n * 2);          // [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+var numberObjects = numbers.Select(n => new { Value = n, IsEven = n % 2 == 0 });
+
+// Ordering
+var ascending = numbers.OrderBy(n => n);           // [1, 2, 3, ...]
+var descending = numbers.OrderByDescending(n => n); // [10, 9, 8, ...]
+var complex = numbers.OrderBy(n => n % 3).ThenByDescending(n => n); // Multiple criteria
+
+// Aggregation
+int sum = numbers.Sum();                           // 55
+int min = numbers.Min();                           // 1
+int max = numbers.Max();                           // 10
+double average = numbers.Average();                // 5.5
+int product = numbers.Aggregate((a, b) => a * b);  // 3628800 (factorial of 10)
+
+// Quantifiers
+bool allEven = numbers.All(n => n % 2 == 0);       // false
+bool anyEven = numbers.Any(n => n % 2 == 0);       // true
+bool containsSeven = numbers.Contains(7);          // true
+
+// Partitioning
+var firstThree = numbers.Take(3);                  // [1, 2, 3]
+var skipFirstThree = numbers.Skip(3);              // [4, 5, 6, 7, 8, 9, 10]
+var takeLast = numbers.TakeLast(2);                // [9, 10]
+var skipLast = numbers.SkipLast(2);                // [1, 2, 3, 4, 5, 6, 7, 8]
+
+// Element operations
+int first = numbers.First();                       // 1
+int firstEven = numbers.First(n => n % 2 == 0);    // 2
+int lastOdd = numbers.Last(n => n % 2 != 0);       // 9
+int single = numbers.Where(n => n == 5).Single();  // 5
+
+// Grouping
+var groups = numbers.GroupBy(n => n % 3);          // Groups by remainder when divided by 3
+foreach (var group in groups)
+{
+    Console.WriteLine($"Remainder {group.Key}: {string.Join(", ", group)}");
+}
+
+// Query syntax (alternative to method syntax)
+var queryResult = from n in numbers
+                  where n > 5
+                  orderby n descending
+                  select n * 2;
+```
+
+**Additional Resources:**
+- [Collections overview (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/collections/)
+- [Collection expressions (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/collection-expressions)
+- [LINQ (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/)
+- [Choosing a collection type (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/collections/selecting-a-collection-class)
+- [System.Collections.Generic Namespace (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic)
 
 <div id="pattern-matching"></div>
 
