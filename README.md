@@ -79,9 +79,6 @@ If you like or are using this project to learn or start your solution, please gi
   - [Exception handling in async code](#exception-handling-in-async-code)
   - [Cancellation in async operations](#cancellation-in-async-operations)
   - [ValueTask and async streams](#valuetask-and-async-streams-c-80)
-- [Performance optimization](#performance-optimization)
-  - [High-performance techniques](#high-performance-techniques)
-  - [Memory management](#memory-management)
 - [Code organization](#code-organization)
   - [Namespaces](#namespaces)
   - [Using directives](#using-directives)
@@ -1940,11 +1937,10 @@ public async Task HandleMultipleExceptionsAsync()
 ## Async exception handling best practices:
 
 1. Always handle exceptions in async methods, especially in async void methods
-2. Be aware that Task.WhenAll throws only the first exception; check all tasks for exceptions
-3. Use AggregateException.Flatten() to simplify handling multiple exceptions
+2. Be aware that `Task.WhenAll` throws only the first exception; check all tasks for exceptions
+3. Use `AggregateException.Flatten()` to simplify handling multiple exceptions
 4. Consider using a global exception handler for unhandled exceptions in async code
 5. Remember that exceptions in async methods are captured and placed on the returned Task
-
 
 ## Cancellation in async operations
 
@@ -2069,127 +2065,6 @@ public async Task ConsumeAsyncStreamAsync()
 
 <div id="code-organization"></div>
 
-# Performance optimization
-
-## High-performance techniques
-
-We can use memory-efficient operations using Span<T>, stack-based allocations, buffer pooling strategies, and specialized parsing methods. 
-
-These approaches reduce heap allocations, prevent memory fragmentation, and optimize resource usage—critical for high-throughput applications and systems with limited resources.
-
-```csharp
-// Using Span<T> for memory-efficient operations
-ReadOnlySpan<char> ParseName(string fullName)
-{
-    ReadOnlySpan<char> nameSpan = fullName.AsSpan();
-    int spaceIndex = nameSpan.IndexOf(' ');
-    return spaceIndex == -1 ? nameSpan : nameSpan[..spaceIndex];
-}
-
-// Span-based parsing
-bool TryParseInt(ReadOnlySpan<char> text, out int result)
-{
-    return int.TryParse(text, out result);
-}
-
-// Avoiding allocations with stackalloc
-Span<byte> buffer = stackalloc byte[128]; // Allocated on stack, not heap
-FillBuffer(buffer);
-
-// Using ArrayPool to reduce GC pressure
-using System.Buffers;
-byte[] tempBuffer = ArrayPool<byte>.Shared.Rent(4096);
-try
-{
-    // Use the buffer
-    ProcessLargeData(tempBuffer);
-}
-finally
-{
-    ArrayPool<byte>.Shared.Return(tempBuffer);
-}
-
-// String building with minimal allocations
-var builder = new StringBuilder(estimatedCapacity: 1000);
-for (int i = 0; i < 1000; i++)
-{
-    builder.Append(i).Append(',');
-}
-string result = builder.ToString();
-
-// Fast text parsing with Utf8Parser
-using System.Buffers.Text;
-ReadOnlySpan<byte> utf8Data = [49, 50, 51]; // ASCII "123"
-if (Utf8Parser.TryParse(utf8Data, out int value, out int bytesConsumed))
-{
-    Console.WriteLine($"Parsed: {value}");
-}
-
-// StreamReader and StreamWriter performance
-using var streamReader = new StreamReader(
-    filename,
-    bufferSize: 4096,
-    detectEncodingFromByteOrderMarks: true);
-
-// Use streams efficiently
-using var fileStream = new FileStream(
-    path,
-    FileMode.Open,
-    FileAccess.Read,
-    FileShare.Read,
-    bufferSize: 4096,
-    useAsync: true);
-```
-
-## Memory management
-
-We can use stack-based value types (structs) to avoid heap allocations, ref structs to enforce stack-only storage, and ref returns that allow direct memory manipulation without copying. 
-
-The example also shows record structs that combine immutability with value type performance benefits. 
-
-```csharp
-// Value types vs reference types
-struct Point        // Stored on stack - better for small, frequently created objects
-{
-    public int X;
-    public int Y;
-}
-
-// Ref structs - cannot be stored on the heap
-ref struct LargeBuffer
-{
-    public Span<byte> Buffer;
-    
-    public LargeBuffer(int size)
-    {
-        Buffer = new byte[size];
-    }
-}
-
-// Ref returns and ref locals
-ref int FindValue(int[] array, int target)
-{
-    for (int i = 0; i < array.Length; i++)
-    {
-        if (array[i] == target)
-        {
-            return ref array[i]; // Return reference to the value, not a copy
-        }
-    }
-    
-    throw new ArgumentException("Target not found");
-}
-
-// Usage
-int[] numbers = [1, 2, 3, 4];
-ref int found = ref FindValue(numbers, 3);
-found = 30; // Modifies the array element directly
-// numbers is now [1, 2, 30, 4]
-
-// Reducing allocations with record structs (C# 10+)
-public readonly record struct UserId(Guid Value);
-```
-
 # Code organization
 
 How you organize your C# code significantly impacts its readability, maintainability, and extensibility. Well-organized code follows consistent patterns, respects separation of concerns, and leverages language features to create clear boundaries between components. 
@@ -2268,7 +2143,7 @@ global using System.Threading.Tasks;
 4. Use static imports sparingly and only for frequently used static members
 5. Consider using aliases to improve readability or avoid ambiguity
 
-## File-scoped Types (C# 11+)
+## File-scoped types (C# 11+)
 
 File-scoped types are accessible only within the file where they're defined, allowing you to create helper classes, interfaces, or enums that are truly private to their implementation file. This reduces the public API surface and prevents accidental usage.
 
