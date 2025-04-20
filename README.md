@@ -29,7 +29,7 @@ If you like or are using this project to learn or start your solution, please gi
 - [Comments](#comments)
 - [Strings](#strings)
 - [Basic types and literals](#basic-types-and-literals)
-- [Methods and Functions](#methods-and-functions)
+- [Methods and functions](#methods-and-functions)
   - [Basic method syntax](#basic-method-syntax)
   - [Expression-bodied members](#expression-bodied-members-c-60)
   - [Method parameters](#method-parameters)
@@ -37,6 +37,22 @@ If you like or are using this project to learn or start your solution, please gi
   - [Extension methods](#extension-methods)
   - [Lambda expressions](#lambda-expressions)
   - [Method overloading](#method-overloading)
+- [Data types](#data-types)
+  - [Classes](#classes)
+  - [Structs](#structs)
+  - [Records](#records-c-90)
+  - [Record structs](#record-structs-c-100)
+  - [Interfaces](#interfaces)
+  - [Enums](#enums)
+  - [Tuples](#tuples)
+  - [Nullable types](#nullable-types)
+- [Classes and inheritance](#classes-and-inheritance)
+  - [Primary constructors](#primary-constructors-c-12)
+  - [Inheritance](#inheritance)
+  - [Abstract classes](#abstract-classes)
+  - [Sealed classes and members](#sealed-classes-and-members)
+  - [Constructors and initialization](#constructors-and-initialization)
+  - [Polymorphism](#polymorphism)
 - [Collections](#collections)
   - [Collection expressions](#collection-expressions-c-12)
   - [Arrays](#arrays)
@@ -45,15 +61,6 @@ If you like or are using this project to learn or start your solution, please gi
   - [HashSet](#hashset)
   - [Queue and Stack](#queue-and-stack)
   - [LINQ](#linq-language-integrated-query)
-- [Data Types](#data-types)
-  - [Classes](#classes)
-  - [Structs](#structs)
-  - [Records](#records-c-90)
-  - [Record Structs](#record-structs-c-100)
-  - [Interfaces](#interfaces)
-  - [Enums](#enums)
-  - [Tuples](#tuples)
-  - [Nullable Types](#nullable-types)
 - [Pattern matching](#pattern-matching)
   - [Type patterns](#type-patterns)
   - [Property patterns](#property-patterns)
@@ -65,14 +72,7 @@ If you like or are using this project to learn or start your solution, please gi
   - [Try-Catch-Finally](#try-catch-finally)
   - [Throwing exceptions](#throwing-exceptions)
   - [Custom exceptions](#custom-exceptions)
-  - [Using sStatement](#using-statement)
-- [Classes and inheritance](#classes-and-inheritance)
-  - [Primary constructors](#primary-constructors-c-12)
-  - [Inheritance](#inheritance)
-  - [Abstract classes](#abstract-classes)
-  - [Sealed classes and members](#sealed-classes-and-members)
-  - [Constructors and initialization](#constructors-and-initialization)
-  - [Polymorphism](#polymorphism)
+  - [Using statement](#using-statement)
 - [Asynchronous programming](#asynchronous-programming)
   - [Async and await basics](#async-and-await-basics)
   - [Task-based asynchronous pattern](#task-based-asynchronous-pattern)
@@ -781,7 +781,7 @@ var queryResult = from n in numbers
 
 <div id="data-types"></div>
 
-# Data Types
+# Data types
 
 C# supports a variety of composite data types to organize and represent data.
 
@@ -916,7 +916,7 @@ public record Employee
 }
 ```
 
-## Record Structs (C# 10.0+)
+## Record structs (C# 10.0+)
 
 Record structs combine the value semantics of structs with the special features of records.
 
@@ -1090,7 +1090,7 @@ void ProcessData((string Name, int Age) person)
 }
 ```
 
-## Nullable Types
+## Nullable types
 
 Nullable types represent values that can be null.
 
@@ -1119,6 +1119,277 @@ int? length = nullableString?.Length; // null if nullableString is null
 // Null-coalescing assignment (C# 8.0+)
 nullableString ??= "Default";
 ```
+
+<div id="classes-and-inheritance"></div>
+
+# Classes and Inheritance
+
+**Classes** are the foundation of object-oriented programming in C#, serving as blueprints for creating objects that encapsulate data and behavior. 
+
+**Inheritance** is a powerful mechanism that enables code reuse and polymorphism by allowing classes to inherit attributes and methods from parent classes. 
+
+Proper use of these features helps create maintainable, extensible code with clear hierarchies.
+
+## Constructors and initialization
+
+Constructors are special methods that initialize objects. They set initial state, enforce invariants, and can chain to other constructors to share initialization logic. Understanding constructor patterns is essential for creating maintainable class hierarchies.
+
+```csharp
+public class Person
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+    
+    // Default constructor
+    public Person()
+    {
+        Name = "Unknown";
+        Age = 0;
+    }
+    
+    // Parameterized constructor
+    public Person(string name, int age)
+    {
+        Name = name;
+        Age = age;
+    }
+    
+    // Static constructor (called once before type is used)
+    static Person()
+    {
+        Console.WriteLine("Person type initialized");
+    }
+}
+
+// Constructor chaining
+public class Employee : Person
+{
+    public string Department { get; set; }
+    
+    // Call the base class constructor
+    public Employee(string name, int age, string department) 
+        : base(name, age)
+    {
+        Department = department;
+    }
+    
+    // Chain to another constructor in the same class
+    public Employee(string name, int age)
+        : this(name, age, "General")
+    {
+    }
+}
+```
+
+## Primary Constructors (C# 12+)
+
+Primary constructors are a new feature in C# 12 that simplify class initialization by allowing constructor parameters to be defined directly in the class declaration. This reduces boilerplate code and makes the relationship between constructor parameters and class members more explicit.
+
+```csharp
+// Class with primary constructor
+public class Person(string name, int age)
+{
+    // Properties initialized by primary constructor parameters
+    public string Name { get; } = name;
+    public int Age { get; } = age;
+    
+    // Can use constructor parameters directly in methods
+    public string Introduce() => $"My name is {name} and I'm {age} years old";
+    
+    // Can still have additional constructors
+    public Person(string name) : this(name, 0)
+    {
+        Console.WriteLine("Created a person with default age");
+    }
+}
+
+// Inheritance with primary constructors
+public class Employee(string name, int age, string department) : Person(name, age)
+{
+    public string Department { get; } = department;
+    
+    // Using base constructor parameters
+    public override string Introduce() => $"{base.Introduce()} working in {department}";
+}
+
+// Usage
+var alice = new Person("Alice", 30);
+var bob = new Employee("Bob", 25, "Engineering");
+```
+
+## Inheritance
+
+Inheritance allows a class (derived class) to inherit properties, methods, and events from another class (base class). This promotes code reuse and establishes an "is-a" relationship between classes. In C#, a class can inherit from only one base class but can implement multiple interfaces.
+
+```csharp
+// Base class
+public class Animal
+{
+    public string Name { get; set; }
+    
+    public Animal(string name)
+    {
+        Name = name;
+    }
+    
+    public virtual void MakeSound()
+    {
+        Console.WriteLine("Some generic animal sound");
+    }
+    
+    // Non-overridable method
+    public void Sleep()
+    {
+        Console.WriteLine($"{Name} is sleeping");
+    }
+}
+
+// Derived class
+public class Dog : Animal
+{
+    public string Breed { get; set; }
+    
+    public Dog(string name, string breed) : base(name)
+    {
+        Breed = breed;
+    }
+    
+    // Override base class method
+    public override void MakeSound()
+    {
+        Console.WriteLine("Woof!");
+    }
+    
+    // New method
+    public void Fetch()
+    {
+        Console.WriteLine($"{Name} is fetching the ball");
+    }
+}
+```
+
+## Abstract classes
+
+Abstract classes serve as incomplete templates that cannot be instantiated directly but must be inherited by concrete classes. They're useful when you want to define common functionality while forcing derived classes to implement specific methods. An abstract class can have both abstract members (without implementation) and concrete members (with implementation).
+
+```csharp
+// Abstract class
+public abstract class Shape
+{
+    // Abstract property (must be implemented)
+    public abstract double Area { get; }
+    
+    // Abstract method (must be implemented)
+    public abstract double Perimeter();
+    
+    // Concrete method
+    public void PrintInfo()
+    {
+        Console.WriteLine($"Area: {Area}, Perimeter: {Perimeter()}");
+    }
+}
+
+// Concrete implementation
+public class Rectangle : Shape
+{
+    public double Width { get; set; }
+    public double Height { get; set; }
+    
+    public Rectangle(double width, double height)
+    {
+        Width = width;
+        Height = height;
+    }
+    
+    public override double Area => Width * Height;
+    
+    public override double Perimeter() => 2 * (Width + Height);
+}
+```
+
+## Sealed classes and members
+
+Sealed classes prevent inheritance, making them useful for security-sensitive classes or when inheritance would break functionality. Sealed methods prevent further overriding in derived classes, ensuring that specific implementations remain unchanged throughout the inheritance chain.
+
+```csharp
+// Sealed class (cannot be inherited)
+public sealed class Utility
+{
+    public static void DoSomething() { }
+}
+
+public class Base
+{
+    // Virtual method that can be overridden
+    public virtual void Method1() { }
+    
+    // Virtual method that can be overridden
+    public virtual void Method2() { }
+}
+
+public class Derived : Base
+{
+    public override void Method1() { }
+    
+    // Sealed method (can't be overridden further in inheritance chain)
+    public sealed override void Method2() { }
+}
+
+public class Further : Derived
+{
+    public override void Method1() { } // OK
+    // public override void Method2() { } // Error: cannot override sealed method
+}
+```
+
+## Polymorphism
+
+Polymorphism allows objects to be treated as instances of their parent class rather than their actual type. This enables more flexible and extensible code by letting you write methods that operate on base classes but respond differently based on the actual object type at runtime.
+
+```csharp
+// Base class reference can refer to derived class objects
+Animal myPet = new Dog("Fido", "Beagle");
+myPet.MakeSound(); // Outputs "Woof!"
+
+// Array of base class can hold derived objects
+Animal[] animals = new Animal[]
+{
+    new Dog("Fido", "Beagle"),
+    new Cat("Whiskers"),
+    new Rabbit("Hopper")
+};
+
+// Polymorphic behavior
+foreach (Animal animal in animals)
+{
+    Console.WriteLine($"{animal.Name} says:");
+    animal.MakeSound(); // Each animal makes its own sound
+}
+
+// Type checking and casting
+if (animals[0] is Dog dog)
+{
+    dog.Fetch(); // Access Dog-specific method
+}
+
+// Explicit casting
+Dog anotherDog = (Dog)animals[0];
+```
+
+When designing class hierarchies, consider these guidelines:
+- Use inheritance when there is a true "is-a" relationship between classes
+- Prefer composition over inheritance for "has-a" relationships
+- Use abstract classes when you want to provide common behavior with forced specialization
+- Use sealed classes for security-sensitive code or to prevent unintended inheritance
+- Implement interfaces for defining capabilities that can be shared across unrelated classes
+
+**Additional Resources:**
+- [Classes and objects (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/object-oriented/classes-and-objects)
+- [Inheritance (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/object-oriented/inheritance)
+- [Abstract classes and methods (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/abstract)
+- [Primary constructors (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-12.0/primary-constructors)
+- [C# object-oriented programming best practices (Microsoft Learn)](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/object-oriented-programming)
+
 
 <div id="pattern-matching"></div>
 
@@ -1478,278 +1749,7 @@ Exception handling has performance implications that should be considered in you
 - [IDisposable pattern (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-dispose)
 - [Exception handling in async code (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/exception-handling-task-asynchronous-pattern)
 
-<div id="classes-and-inheritance"></div>
-
-# Classes and Inheritance
-
-**Classes** are the foundation of object-oriented programming in C#, serving as blueprints for creating objects that encapsulate data and behavior. 
-
-**Inheritance** is a powerful mechanism that enables code reuse and polymorphism by allowing classes to inherit attributes and methods from parent classes. 
-
-Proper use of these features helps create maintainable, extensible code with clear hierarchies.
-
-## Constructors and initialization
-
-Constructors are special methods that initialize objects. They set initial state, enforce invariants, and can chain to other constructors to share initialization logic. Understanding constructor patterns is essential for creating maintainable class hierarchies.
-
-```csharp
-public class Person
-{
-    public string Name { get; set; }
-    public int Age { get; set; }
-    
-    // Default constructor
-    public Person()
-    {
-        Name = "Unknown";
-        Age = 0;
-    }
-    
-    // Parameterized constructor
-    public Person(string name, int age)
-    {
-        Name = name;
-        Age = age;
-    }
-    
-    // Static constructor (called once before type is used)
-    static Person()
-    {
-        Console.WriteLine("Person type initialized");
-    }
-}
-
-// Constructor chaining
-public class Employee : Person
-{
-    public string Department { get; set; }
-    
-    // Call the base class constructor
-    public Employee(string name, int age, string department) 
-        : base(name, age)
-    {
-        Department = department;
-    }
-    
-    // Chain to another constructor in the same class
-    public Employee(string name, int age)
-        : this(name, age, "General")
-    {
-    }
-}
-```
-
-## Primary Constructors (C# 12+)
-
-Primary constructors are a new feature in C# 12 that simplify class initialization by allowing constructor parameters to be defined directly in the class declaration. This reduces boilerplate code and makes the relationship between constructor parameters and class members more explicit.
-
-```csharp
-// Class with primary constructor
-public class Person(string name, int age)
-{
-    // Properties initialized by primary constructor parameters
-    public string Name { get; } = name;
-    public int Age { get; } = age;
-    
-    // Can use constructor parameters directly in methods
-    public string Introduce() => $"My name is {name} and I'm {age} years old";
-    
-    // Can still have additional constructors
-    public Person(string name) : this(name, 0)
-    {
-        Console.WriteLine("Created a person with default age");
-    }
-}
-
-// Inheritance with primary constructors
-public class Employee(string name, int age, string department) : Person(name, age)
-{
-    public string Department { get; } = department;
-    
-    // Using base constructor parameters
-    public override string Introduce() => $"{base.Introduce()} working in {department}";
-}
-
-// Usage
-var alice = new Person("Alice", 30);
-var bob = new Employee("Bob", 25, "Engineering");
-```
-
-## Inheritance
-
-Inheritance allows a class (derived class) to inherit properties, methods, and events from another class (base class). This promotes code reuse and establishes an "is-a" relationship between classes. In C#, a class can inherit from only one base class but can implement multiple interfaces.
-
-```csharp
-// Base class
-public class Animal
-{
-    public string Name { get; set; }
-    
-    public Animal(string name)
-    {
-        Name = name;
-    }
-    
-    public virtual void MakeSound()
-    {
-        Console.WriteLine("Some generic animal sound");
-    }
-    
-    // Non-overridable method
-    public void Sleep()
-    {
-        Console.WriteLine($"{Name} is sleeping");
-    }
-}
-
-// Derived class
-public class Dog : Animal
-{
-    public string Breed { get; set; }
-    
-    public Dog(string name, string breed) : base(name)
-    {
-        Breed = breed;
-    }
-    
-    // Override base class method
-    public override void MakeSound()
-    {
-        Console.WriteLine("Woof!");
-    }
-    
-    // New method
-    public void Fetch()
-    {
-        Console.WriteLine($"{Name} is fetching the ball");
-    }
-}
-```
-
-## Abstract classes
-
-Abstract classes serve as incomplete templates that cannot be instantiated directly but must be inherited by concrete classes. They're useful when you want to define common functionality while forcing derived classes to implement specific methods. An abstract class can have both abstract members (without implementation) and concrete members (with implementation).
-
-```csharp
-// Abstract class
-public abstract class Shape
-{
-    // Abstract property (must be implemented)
-    public abstract double Area { get; }
-    
-    // Abstract method (must be implemented)
-    public abstract double Perimeter();
-    
-    // Concrete method
-    public void PrintInfo()
-    {
-        Console.WriteLine($"Area: {Area}, Perimeter: {Perimeter()}");
-    }
-}
-
-// Concrete implementation
-public class Rectangle : Shape
-{
-    public double Width { get; set; }
-    public double Height { get; set; }
-    
-    public Rectangle(double width, double height)
-    {
-        Width = width;
-        Height = height;
-    }
-    
-    public override double Area => Width * Height;
-    
-    public override double Perimeter() => 2 * (Width + Height);
-}
-```
-
-## Sealed classes and members
-
-Sealed classes prevent inheritance, making them useful for security-sensitive classes or when inheritance would break functionality. Sealed methods prevent further overriding in derived classes, ensuring that specific implementations remain unchanged throughout the inheritance chain.
-
-```csharp
-// Sealed class (cannot be inherited)
-public sealed class Utility
-{
-    public static void DoSomething() { }
-}
-
-public class Base
-{
-    // Virtual method that can be overridden
-    public virtual void Method1() { }
-    
-    // Virtual method that can be overridden
-    public virtual void Method2() { }
-}
-
-public class Derived : Base
-{
-    public override void Method1() { }
-    
-    // Sealed method (can't be overridden further in inheritance chain)
-    public sealed override void Method2() { }
-}
-
-public class Further : Derived
-{
-    public override void Method1() { } // OK
-    // public override void Method2() { } // Error: cannot override sealed method
-}
-```
-
-## Polymorphism
-
-Polymorphism allows objects to be treated as instances of their parent class rather than their actual type. This enables more flexible and extensible code by letting you write methods that operate on base classes but respond differently based on the actual object type at runtime.
-
-```csharp
-// Base class reference can refer to derived class objects
-Animal myPet = new Dog("Fido", "Beagle");
-myPet.MakeSound(); // Outputs "Woof!"
-
-// Array of base class can hold derived objects
-Animal[] animals = new Animal[]
-{
-    new Dog("Fido", "Beagle"),
-    new Cat("Whiskers"),
-    new Rabbit("Hopper")
-};
-
-// Polymorphic behavior
-foreach (Animal animal in animals)
-{
-    Console.WriteLine($"{animal.Name} says:");
-    animal.MakeSound(); // Each animal makes its own sound
-}
-
-// Type checking and casting
-if (animals[0] is Dog dog)
-{
-    dog.Fetch(); // Access Dog-specific method
-}
-
-// Explicit casting
-Dog anotherDog = (Dog)animals[0];
-```
-
-When designing class hierarchies, consider these guidelines:
-- Use inheritance when there is a true "is-a" relationship between classes
-- Prefer composition over inheritance for "has-a" relationships
-- Use abstract classes when you want to provide common behavior with forced specialization
-- Use sealed classes for security-sensitive code or to prevent unintended inheritance
-- Implement interfaces for defining capabilities that can be shared across unrelated classes
-
-**Additional Resources:**
-- [Classes and objects (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/object-oriented/classes-and-objects)
-- [Inheritance (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/object-oriented/inheritance)
-- [Abstract classes and methods (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/abstract)
-- [Primary constructors (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-12.0/primary-constructors)
-- [C# object-oriented programming best practices (Microsoft Learn)](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/object-oriented-programming)
-
-
-<div id="interfaces-and-default-implementation"></div>
+<div id="asynchronous-programming"></div>
 
 # Asynchronous Programming
 
