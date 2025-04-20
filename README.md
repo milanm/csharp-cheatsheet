@@ -571,6 +571,8 @@ bool isValid = Person.IsValidAge(20);
 
 Structs are value types and are suitable for small, immutable data structures.
 
+Note that you cannot give initial values to a struct unless you make it static or const.
+
 ```csharp
 // Basic struct definition
 public struct Point
@@ -1542,7 +1544,7 @@ catch (DivideByZeroException ex)
 }
 catch (FileNotFoundException ex) when (ex.FileName.Contains("nonexistent"))
 {
-    // Exception filter (C# 6.0+) allows conditional catching
+    // Exception filter (C# 6.0+) allows conditionals to catch blocks
     Console.WriteLine($"File not found: {ex.FileName}");
 }
 catch (IOException ex)
@@ -2072,7 +2074,7 @@ Modern C# includes numerous features that help enforce good code organization pr
 
 ## Namespaces
 
-Namespaces in C# provide a way to organize code into logical groups and prevent naming conflicts. They create a hierarchical structure for your types, making large codebases more manageable and allowing for intuitive navigation.
+Namespaces in C# provide a way to organize code into logical groups and prevent naming conflicts. They create a hierarchical structure for your types (yes, they can be nested), making large codebases more manageable and allowing for intuitive navigation.
 
 ```csharp
 // Namespace declaration
@@ -2288,7 +2290,7 @@ public class PropertyDemo
         get => key switch
         {
             "first" => _data[0],
-            "last" => _data[^1],
+            "last" => _data[^1],                               // The “Hat” Operator (^) is used as a prefix to count indexes starting from the end of a list.
             _ => throw new ArgumentException("Invalid key")
         };
     }
