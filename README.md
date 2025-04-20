@@ -89,10 +89,6 @@ If you like or are using this project to learn or start your solution, please gi
   - [Exception Handling in Async Code](#exception-handling-in-async-code)
   - [Cancellation in Async Operations](#cancellation-in-async-operations)
   - [ValueTask and Async Streams](#valuetask-and-async-streams-c-80)
-- [Modern Testing Approaches](#modern-testing-approaches)
-  - [Unit Testing with xUnit](#unit-testing-with-xunit)
-  - [Mocking with Moq and NSubstitute](#mocking-with-moq-and-nsubstitute)
-  - [Integration Testing](#integration-testing)
 - [Performance Optimization](#performance-optimization)
   - [High-Performance Techniques](#high-performance-techniques)
   - [Memory Management](#memory-management)
@@ -1234,9 +1230,11 @@ var (name, _) = person; // Discard the age
 
 # Exceptions
 
-Exception handling in C# allows you to gracefully handle runtime errors.
+Exception handling is a critical aspect of robust C# applications, allowing you to gracefully manage errors and unexpected conditions. Well-designed exception handling balances providing useful feedback to users, maintaining application stability, and preserving valuable diagnostic information for developers.
 
 ## Try-Catch-Finally
+
+The try-catch-finally pattern forms the backbone of exception handling in C#. Code that might throw exceptions is placed in the `try` block, specific exception types are caught and handled in `catch` blocks, and cleanup code that should always execute (regardless of exceptions) goes in the `finally` block.
 
 ```csharp
 try
@@ -1249,10 +1247,14 @@ catch (DivideByZeroException ex)
 {
     // Handle specific exception
     Console.WriteLine($"Math error: {ex.Message}");
+    // Log the exception details for developers
+    Logger.LogError(ex, "Division by zero occurred");
+    // Provide user-friendly message
+    ShowUserErrorMessage("A calculation error occurred. Please try different input values.");
 }
 catch (FileNotFoundException ex) when (ex.FileName.Contains("nonexistent"))
 {
-    // Exception filter (C# 6.0+)
+    // Exception filter (C# 6.0+) allows conditional catching
     Console.WriteLine($"File not found: {ex.FileName}");
 }
 catch (IOException ex)
@@ -1264,16 +1266,45 @@ catch (Exception ex)
 {
     // Catch all other exceptions
     Console.WriteLine($"Unexpected error: {ex.Message}");
-    throw; // Re-throw the exception
+    throw; // Re-throw the exception to preserve stack trace
 }
 finally
 {
     // Code that always executes, whether an exception occurred or not
     Console.WriteLine("This always runs");
+    // Common cleanup operations:
+    // - Close file handles
+    // - Release database connections
+    // - Dispose of unmanaged resources
+    // - Return pooled objects
 }
 ```
 
+## When to Use Different Exception Approaches
+
+1. **Specific vs. General Exception catching**:
+   - Catch specific exceptions when you can handle them in a meaningful way
+   - Only catch `Exception` as a last resort to log unexpected errors or provide generic fallbacks
+   - Avoid empty catch blocks that swallow exceptions without handling them
+
+2. **Exception filters**:
+   - Use when you only want to catch exceptions that meet certain criteria
+   - Helps avoid unnecessary exception handling and maintain more precise control flow
+   - Can include methods that perform logging without handling the exception (side-effect logging)
+
+3. **Re-throwing Exceptions**:
+   - Use `throw;` (without specified exception) to preserve the original stack trace
+   - Only use `throw ex;` when you want to deliberately reset the stack trace (rarely needed)
+   - Consider wrapping in a more appropriate exception type when crossing abstraction boundaries
+
+4. **Exception Prevention vs. Handling**:
+   - Use `TryParse` patterns and null checking to prevent exceptions when possible
+   - Reserve exception handling for truly exceptional conditions, not for normal control flow
+   - Consider validation before operations that might throw exceptions
+
 ## Throwing Exceptions
+
+Throwing exceptions should be done deliberately and with consideration for the calling code. This includes choosing appropriate exception types, providing meaningful messages, and including relevant context.
 
 ```csharp
 // Throw exceptions
@@ -1281,12 +1312,17 @@ void ProcessData(string data)
 {
     if (data == null)
     {
-        throw new ArgumentNullException(nameof(data));
+        throw new ArgumentNullException(nameof(data), "Data cannot be null.");
     }
     
     if (data.Length == 0)
     {
-        throw new ArgumentException("Data cannot be empty", nameof(data));
+        throw new ArgumentException("Data cannot be empty.", nameof(data));
+    }
+    
+    if (!IsValidFormat(data))
+    {
+        throw new FormatException($"Data '{data}' is not in the required format.");
     }
     
     // Process valid data...
@@ -1305,12 +1341,25 @@ catch (Exception ex)
     // Preserve stack trace when rethrowing
     throw;
     
-    // This would reset the stack trace:
+    // This would reset the stack trace (usually undesirable):
     // throw ex;
 }
 ```
 
+## Guidelines for Exception Types:
+
+1. **System.ArgumentException**: Use when a method argument is invalid
+2. **System.ArgumentNullException**: Use when an argument is unexpectedly null
+3. **System.InvalidOperationException**: Use when the object state doesn't allow the operation 
+4. **System.NotImplementedException**: Use for methods that aren't implemented yet
+5. **System.NotSupportedException**: Use for operations that won't be implemented
+6. **System.IO.IOException**: Use for file system and I/O errors
+7. **System.FormatException**: Use when string format is incorrect for the expected type
+8. **Custom exceptions**: Create when built-in exceptions don't appropriately describe your error
+
 ## Custom Exceptions
+
+Custom exceptions allow you to create domain-specific error types that provide more meaningful context about what went wrong in your application. They should be created when built-in exception types don't adequately capture the specific error condition.
 
 ```csharp
 // Define custom exception
@@ -1329,6 +1378,21 @@ public class CustomerNotFoundException : Exception
     {
         CustomerId = customerId;
     }
+    
+    // For serialization support (important for distributed applications)
+    protected CustomerNotFoundException(System.Runtime.Serialization.SerializationInfo info,
+        System.Runtime.Serialization.StreamingContext context) : base(info, context)
+    {
+        CustomerId = info.GetInt32(nameof(CustomerId));
+    }
+    
+    // Override GetObjectData for proper serialization
+    public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info,
+        System.Runtime.Serialization.StreamingContext context)
+    {
+        base.GetObjectData(info, context);
+        info.AddValue(nameof(CustomerId), CustomerId);
+    }
 }
 
 // Usage
@@ -1345,29 +1409,65 @@ void ProcessCustomer(int customerId)
 
 ## Using Statement
 
-The `using` statement ensures that disposable resources are properly cleaned up.
+The `using` statement ensures that disposable resources are properly cleaned up, even if exceptions occur. It's an essential pattern for working with resources like files, network connections, and database connections that need to be explicitly released.
 
 ```csharp
 // Traditional using statement
 using (StreamReader reader = new StreamReader("file.txt"))
 {
     string content = reader.ReadToEnd();
-    // reader is automatically disposed here
+    // reader is automatically disposed here, even if an exception occurs
 }
 
 // Using declaration (C# 8.0+)
 using StreamWriter writer = new StreamWriter("output.txt");
 writer.WriteLine("Hello, World!");
 // writer is disposed at the end of the scope
+
+// Multiple resources in one using statement
+using (var connection = new SqlConnection(connectionString))
+using (var command = new SqlCommand(queryString, connection))
+{
+    connection.Open();
+    using (var reader = command.ExecuteReader())
+    {
+        // Process data
+    }
+}
+
+// Using declaration with multiple resources (C# 8.0+)
+using var fileStream = new FileStream("data.bin", FileMode.Create);
+using var binaryWriter = new BinaryWriter(fileStream);
+binaryWriter.Write(42);
+// Both binaryWriter and fileStream are disposed at end of scope
 ```
+
+## Performance Considerations
+
+Exception handling has performance implications that should be considered in your design:
+
+1. The `try` block itself has minimal overhead when no exceptions occur
+2. Throwing and catching exceptions is relatively expensive and should not be used for normal control flow
+3. Use patterns like `TryParse` and null checking to avoid throwing exceptions in expected scenarios
+4. Reserve exceptions for truly exceptional conditions that shouldn't happen in normal operation
+5. Consider using status return codes or `Result<T>` pattern for expected error conditions in performance-critical code
+
+**Additional Resources:**
+- [Exception Handling (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/exceptions/)
+- [Best Practices for Exceptions (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/exceptions/best-practices-for-exceptions)
+- [Creating and Throwing Exceptions (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/exceptions/how-to-create-user-defined-exceptions)
+- [IDisposable Pattern (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-dispose)
+- [Exception Handling in Async Code (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/exception-handling-task-asynchronous-pattern)
 
 <div id="classes-and-inheritance"></div>
 
 # Classes and Inheritance
 
+Classes are the foundation of object-oriented programming in C#, serving as blueprints for creating objects that encapsulate data and behavior. Inheritance is a powerful mechanism that enables code reuse and polymorphism by allowing classes to inherit attributes and methods from parent classes. Proper use of these features helps create maintainable, extensible code with clear hierarchies.
+
 ## Primary Constructors (C# 12+)
 
-Primary constructors bring concise syntax for class initialization and property definition:
+Primary constructors are a new feature in C# 12 that simplify class initialization by allowing constructor parameters to be defined directly in the class declaration. This reduces boilerplate code and makes the relationship between constructor parameters and class members more explicit.
 
 ```csharp
 // Class with primary constructor
@@ -1402,6 +1502,230 @@ var bob = new Employee("Bob", 25, "Engineering");
 ```
 
 ## Inheritance
+
+Inheritance allows a class (derived class) to inherit properties, methods, and events from another class (base class). This promotes code reuse and establishes an "is-a" relationship between classes. In C#, a class can inherit from only one base class but can implement multiple interfaces.
+
+```csharp
+// Base class
+public class Animal
+{
+    public string Name { get; set; }
+    
+    public Animal(string name)
+    {
+        Name = name;
+    }
+    
+    public virtual void MakeSound()
+    {
+        Console.WriteLine("Some generic animal sound");
+    }
+    
+    // Non-overridable method
+    public void Sleep()
+    {
+        Console.WriteLine($"{Name} is sleeping");
+    }
+}
+
+// Derived class
+public class Dog : Animal
+{
+    public string Breed { get; set; }
+    
+    public Dog(string name, string breed) : base(name)
+    {
+        Breed = breed;
+    }
+    
+    // Override base class method
+    public override void MakeSound()
+    {
+        Console.WriteLine("Woof!");
+    }
+    
+    // New method
+    public void Fetch()
+    {
+        Console.WriteLine($"{Name} is fetching the ball");
+    }
+}
+```
+
+## Abstract Classes
+
+Abstract classes serve as incomplete templates that cannot be instantiated directly but must be inherited by concrete classes. They're useful when you want to define common functionality while forcing derived classes to implement specific methods. An abstract class can have both abstract members (without implementation) and concrete members (with implementation).
+
+```csharp
+// Abstract class
+public abstract class Shape
+{
+    // Abstract property (must be implemented)
+    public abstract double Area { get; }
+    
+    // Abstract method (must be implemented)
+    public abstract double Perimeter();
+    
+    // Concrete method
+    public void PrintInfo()
+    {
+        Console.WriteLine($"Area: {Area}, Perimeter: {Perimeter()}");
+    }
+}
+
+// Concrete implementation
+public class Rectangle : Shape
+{
+    public double Width { get; set; }
+    public double Height { get; set; }
+    
+    public Rectangle(double width, double height)
+    {
+        Width = width;
+        Height = height;
+    }
+    
+    public override double Area => Width * Height;
+    
+    public override double Perimeter() => 2 * (Width + Height);
+}
+```
+
+## Sealed Classes and Members
+
+Sealed classes prevent inheritance, making them useful for security-sensitive classes or when inheritance would break functionality. Sealed methods prevent further overriding in derived classes, ensuring that specific implementations remain unchanged throughout the inheritance chain.
+
+```csharp
+// Sealed class (cannot be inherited)
+public sealed class Utility
+{
+    public static void DoSomething() { }
+}
+
+public class Base
+{
+    // Virtual method that can be overridden
+    public virtual void Method1() { }
+    
+    // Virtual method that can be overridden
+    public virtual void Method2() { }
+}
+
+public class Derived : Base
+{
+    public override void Method1() { }
+    
+    // Sealed method (can't be overridden further in inheritance chain)
+    public sealed override void Method2() { }
+}
+
+public class Further : Derived
+{
+    public override void Method1() { } // OK
+    // public override void Method2() { } // Error: cannot override sealed method
+}
+```
+
+## Constructors and Initialization
+
+Constructors are special methods that initialize objects. They set initial state, enforce invariants, and can chain to other constructors to share initialization logic. Understanding constructor patterns is essential for creating maintainable class hierarchies.
+
+```csharp
+public class Person
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+    
+    // Default constructor
+    public Person()
+    {
+        Name = "Unknown";
+        Age = 0;
+    }
+    
+    // Parameterized constructor
+    public Person(string name, int age)
+    {
+        Name = name;
+        Age = age;
+    }
+    
+    // Static constructor (called once before type is used)
+    static Person()
+    {
+        Console.WriteLine("Person type initialized");
+    }
+}
+
+// Constructor chaining
+public class Employee : Person
+{
+    public string Department { get; set; }
+    
+    // Call the base class constructor
+    public Employee(string name, int age, string department) 
+        : base(name, age)
+    {
+        Department = department;
+    }
+    
+    // Chain to another constructor in the same class
+    public Employee(string name, int age)
+        : this(name, age, "General")
+    {
+    }
+}
+```
+
+## Polymorphism
+
+Polymorphism allows objects to be treated as instances of their parent class rather than their actual type. This enables more flexible and extensible code by letting you write methods that operate on base classes but respond differently based on the actual object type at runtime.
+
+```csharp
+// Base class reference can refer to derived class objects
+Animal myPet = new Dog("Fido", "Beagle");
+myPet.MakeSound(); // Outputs "Woof!"
+
+// Array of base class can hold derived objects
+Animal[] animals = new Animal[]
+{
+    new Dog("Fido", "Beagle"),
+    new Cat("Whiskers"),
+    new Rabbit("Hopper")
+};
+
+// Polymorphic behavior
+foreach (Animal animal in animals)
+{
+    Console.WriteLine($"{animal.Name} says:");
+    animal.MakeSound(); // Each animal makes its own sound
+}
+
+// Type checking and casting
+if (animals[0] is Dog dog)
+{
+    dog.Fetch(); // Access Dog-specific method
+}
+
+// Explicit casting
+Dog anotherDog = (Dog)animals[0];
+```
+
+When designing class hierarchies, consider these guidelines:
+- Use inheritance when there is a true "is-a" relationship between classes
+- Prefer composition over inheritance for "has-a" relationships
+- Use abstract classes when you want to provide common behavior with forced specialization
+- Use sealed classes for security-sensitive code or to prevent unintended inheritance
+- Implement interfaces for defining capabilities that can be shared across unrelated classes
+
+**Additional Resources:**
+- [Classes and Objects (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/object-oriented/classes-and-objects)
+- [Inheritance (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/object-oriented/inheritance)
+- [Abstract Classes and Methods (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/abstract)
+- [Primary Constructors (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-12.0/primary-constructors)
+- [C# Object-Oriented Programming Best Practices (Microsoft Learn)](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/object-oriented-programming)
+
+<div id="interfaces-and-default-implementation"></div>
 
 ```csharp
 // Base class
@@ -1988,6 +2312,30 @@ public class UsersController : ControllerBase
 
 # Asynchronous Programming
 
+Asynchronous programming in C# allows you to write non-blocking code that can improve responsiveness and throughput, particularly in I/O-bound and network operations. Modern C# provides elegant syntax with async/await that makes asynchronous code almost as straightforward to write as synchronous code, while maintaining the performance benefits.
+
+## When to Use Asynchronous Programming
+
+Understanding when to use async code is crucial:
+
+1. I/O-bound operations: Use async/await for operations that spend time waiting for external resources:
+    - Network requests
+    - Database operations
+    - File system operations
+    - Web API calls
+    - User input
+
+2. CPU-bound operations: For computationally intensive work, use:
+    - Task.Run to offload work to a background thread
+    - Parallel processing APIs for data parallelism
+
+
+>It is not recommended for:
+
+    - Simple, fast operations where async overhead exceeds benefits
+    - Synchronous CPU-bound work (unless you need to offload it)
+    - When synchronization complexity outweighs the benefits
+
 ## Async and Await Basics
 
 ```csharp
@@ -2029,7 +2377,19 @@ public async void Button_Click(object sender, EventArgs e)
 }
 ```
 
+## Guidelines for Async Methods:
+
+1. Naming Convention: Append "Async" to method names that return Task or Task<T>
+2. Return Types:
+    - Use Task<T> for methods that return a value
+    - Use Task for methods that don't return a value
+    - Avoid async void except for event handlers
+3. Async All the Way: Convert entire call chains to async to avoid blocking
+4. ConfigureAwait: Use ConfigureAwait(false) in library code to avoid forcing context
+
 ## Task-based Asynchronous Pattern
+
+The Task-based Asynchronous Pattern (TAP) is the recommended approach for asynchronous programming in C#. It uses `Task` and `Task<T>` to represent ongoing work and provides rich composition capabilities.
 
 ```csharp
 // Create and return a Task
@@ -2138,8 +2498,91 @@ public async Task HandleMultipleExceptionsAsync()
     }
 }
 ```
+When to use different task composition methods:
+1. Task.WhenAll: Use when you need the results of all operations and they can run concurrently
+2. Task.WhenAny: Use for implementing timeouts, racing operations, or taking the first available result
+3. Task.Run: Use for CPU-bound work that needs to be offloaded from the current thread
+4. Task.Delay: Use for implementing timeouts or periodic operations in async methods
+
+## Exception Handling in Async Code
+
+Exception handling in async code requires special consideration to ensure errors are properly caught and handled.
+
+```csharp
+public async Task ExceptionHandlingExampleAsync()
+{
+    try
+    {
+        // Multiple awaits in one try block
+        string data = await DownloadDataAsync("https://example.com/api/data");
+        int result = await ProcessDataAsync(data);
+        await SaveResultAsync(result);
+    }
+    catch (HttpRequestException ex)
+    {
+        // Handle network-related exceptions
+        Console.WriteLine($"Network error: {ex.Message}");
+    }
+    catch (JsonException ex)
+    {
+        // Handle JSON parsing exceptions
+        Console.WriteLine($"Invalid data format: {ex.Message}");
+    }
+    catch (Exception ex)
+    {
+        // Handle all other exceptions
+        Console.WriteLine($"Unexpected error: {ex.Message}");
+    }
+}
+
+// Aggregate exceptions with Task.WhenAll
+public async Task HandleMultipleExceptionsAsync()
+{
+    var tasks = new List<Task>();
+    
+    for (int i = 0; i < 5; i++)
+    {
+        int taskNumber = i;
+        tasks.Add(Task.Run(async () =>
+        {
+            if (taskNumber % 2 == 0)
+            {
+                await Task.Delay(100);
+                throw new Exception($"Task {taskNumber} failed");
+            }
+        }));
+    }
+    
+    try
+    {
+        await Task.WhenAll(tasks);
+    }
+    catch (Exception)
+    {
+        // Check for all exceptions
+        foreach (var task in tasks)
+        {
+            if (task.Exception != null)
+            {
+                Console.WriteLine(task.Exception.InnerException.Message);
+            }
+        }
+    }
+}
+```
+
+## Async Exception Handling Best Practices:
+
+1. Always handle exceptions in async methods, especially in async void methods
+2. Be aware that Task.WhenAll throws only the first exception; check all tasks for exceptions
+3. Use AggregateException.Flatten() to simplify handling multiple exceptions
+4. Consider using a global exception handler for unhandled exceptions in async code
+5. Remember that exceptions in async methods are captured and placed on the returned Task
+
 
 ## Cancellation in Async Operations
+
+Cancellation allows long-running operations to be stopped gracefully. The CancellationToken mechanism provides a standardized way to implement cancellation in async methods.
 
 ```csharp
 public async Task DemonstrateCancellationAsync()
@@ -2193,6 +2636,8 @@ public async Task<string> DownloadWithTimeoutAsync(string url, TimeSpan timeout)
 ```
 
 ## ValueTask and Async Streams (C# 8.0+)
+
+`ValueTask` and async streams are newer features that enhance async programming in specific scenarios by improving performance and extending the asynchronous model to sequences.
 
 ```csharp
 // ValueTask for potentially synchronous, high-performance scenarios
@@ -2257,138 +2702,6 @@ public async Task ConsumeAsyncStreamAsync()
 ```
 
 <div id="code-organization"></div>
-
-# Modern Testing Approaches
-
-## Unit Testing with xUnit
-
-```csharp
-using Xunit;
-using FluentAssertions; // Modern assertion library
-
-public class CalculatorTests
-{
-    [Fact]
-    public void Add_ShouldReturnSum_WhenGivenTwoNumbers()
-    {
-        // Arrange
-        var calculator = new Calculator();
-        
-        // Act
-        var result = calculator.Add(3, 4);
-        
-        // Assert
-        result.Should().Be(7);
-    }
-    
-    [Theory]
-    [InlineData(1, 1, 2)]
-    [InlineData(5, 10, 15)]
-    [InlineData(-3, 3, 0)]
-    public void Add_ShouldReturnCorrectSum_ForMultipleInputs(int a, int b, int expected)
-    {
-        var calculator = new Calculator();
-        calculator.Add(a, b).Should().Be(expected);
-    }
-}
-```
-
-## Mocking with Moq and NSubstitute
-
-```csharp
-// NSubstitute example
-[Fact]
-public async Task ProcessOrder_ShouldCallRepository_WhenOrderIsValid()
-{
-    // Arrange
-    var repository = Substitute.For<IOrderRepository>();
-    var emailService = Substitute.For<IEmailService>();
-    repository.SaveAsync(Arg.Any<Order>()).Returns(Task.FromResult(true));
-    
-    var service = new OrderService(repository, emailService);
-    var order = new Order { Id = 1, CustomerId = 42, Items = new List<OrderItem>() };
-    
-    // Act
-    await service.ProcessOrderAsync(order);
-    
-    // Assert
-    await repository.Received(1).SaveAsync(Arg.Is<Order>(o => o.Id == 1));
-    await emailService.Received(1).SendOrderConfirmationAsync(Arg.Any<Order>());
-}
-
-// Moq example
-[Fact]
-public async Task GetActiveUsers_ShouldFilterInactiveUsers()
-{
-    // Arrange
-    var users = new List<User>
-    {
-        new User { Id = 1, IsActive = true },
-        new User { Id = 2, IsActive = false },
-        new User { Id = 3, IsActive = true }
-    };
-    
-    var mockRepo = new Mock<IUserRepository>();
-    mockRepo.Setup(repo => repo.GetAllUsersAsync())
-        .ReturnsAsync(users);
-    
-    var service = new UserService(mockRepo.Object);
-    
-    // Act
-    var activeUsers = await service.GetActiveUsersAsync();
-    
-    // Assert
-    activeUsers.Should().HaveCount(2);
-    activeUsers.Should().OnlyContain(u => u.IsActive);
-}
-```
-
-## Integration Testing
-
-```csharp
-public class ApiIntegrationTests : IClassFixture<WebApplicationFactory<Program>>
-{
-    private readonly WebApplicationFactory<Program> _factory;
-    
-    public ApiIntegrationTests(WebApplicationFactory<Program> factory)
-    {
-        _factory = factory.WithWebHostBuilder(builder =>
-        {
-            builder.ConfigureServices(services =>
-            {
-                // Replace real services with test doubles
-                var descriptor = services.SingleOrDefault(d => 
-                    d.ServiceType == typeof(DbContextOptions<AppDbContext>));
-                
-                if (descriptor != null)
-                {
-                    services.Remove(descriptor);
-                }
-                
-                services.AddDbContext<AppDbContext>(options =>
-                {
-                    options.UseInMemoryDatabase("TestDb");
-                });
-            });
-        });
-    }
-    
-    [Fact]
-    public async Task GetUsers_ReturnsSuccessStatusCode()
-    {
-        // Arrange
-        var client = _factory.CreateClient();
-        
-        // Act
-        var response = await client.GetAsync("/api/users");
-        
-        // Assert
-        response.EnsureSuccessStatusCode();
-        var users = await response.Content.ReadFromJsonAsync<IEnumerable<User>>();
-        users.Should().NotBeNull();
-    }
-}
-```
 
 # Performance Optimization
 
@@ -2505,7 +2818,11 @@ public readonly record struct UserId(Guid Value);
 
 # Code Organization
 
+How you organize your C# code significantly impacts its readability, maintainability, and extensibility. Well-organized code follows consistent patterns, respects separation of concerns, and leverages language features to create clear boundaries between components. Modern C# includes numerous features that help enforce good code organization principles.
+
 ## Namespaces
+
+Namespaces in C# provide a way to organize code into logical groups and prevent naming conflicts. They create a hierarchical structure for your types, making large codebases more manageable and allowing for intuitive navigation.
 
 ```csharp
 // Namespace declaration
@@ -2526,7 +2843,17 @@ public class Customer
 }
 ```
 
+### Namespace organization best practices:
+
+1. Structure namespaces to reflect logical organization, not folder structure
+2. Consider using a company or project name as the top-level namespace
+3. Group related functionality within namespace hierarchies
+4. Avoid deeply nested namespaces (more than 3-4 levels)
+5. Don't put different functionality in the same namespace just because they're in the same assembly
+
 ## Using Directives
+
+Using directives specify which namespaces are referenced in your code, allowing you to use types from those namespaces without fully qualifying them. They improve code readability by reducing repetition.
 
 ```csharp
 // Import namespace
@@ -2557,7 +2884,17 @@ global using System.Threading;
 global using System.Threading.Tasks;
 ```
 
+### Using directives best practices:
+
+1. Place `using` directives at the top of the file, outside of namespace declarations
+2. Order `using` directives alphabetically, with System namespaces first
+3. Use `global using` for commonly used namespaces across many files
+4. Use static imports sparingly and only for frequently used static members
+5. Consider using aliases to improve readability or avoid ambiguity
+
 ## File-scoped Types (C# 11+)
+
+File-scoped types are accessible only within the file where they're defined, allowing you to create helper classes, interfaces, or enums that are truly private to their implementation file. This reduces the public API surface and prevents accidental usage.
 
 ```csharp
 // File: UserService.cs
@@ -2592,7 +2929,10 @@ file static class StringExtensions  // Only visible in this file
 }
 ```
 
+
 ## Partial Classes
+
+Partial classes allow splitting a class, struct, or interface definition across multiple files. This can be useful for separating generated code from hand-written code or dividing large classes by functionality.
 
 ```csharp
 // File: Customer.cs
@@ -2617,9 +2957,21 @@ public partial class Customer
         Orders.Add(order);
     }
 }
+
+// File: Customer.Validation.cs
+public partial class Customer
+{
+    public bool Validate()
+    {
+        // Validation logic
+        return !string.IsNullOrEmpty(Name);
+    }
+}
 ```
 
 ## Access Modifiers
+
+Access modifiers control the visibility and accessibility of types and type members. Properly applied access modifiers create clear boundaries and enforce encapsulation.
 
 ```csharp
 // Access modifiers
@@ -2634,7 +2986,18 @@ public class AccessModifierDemo
 }
 ```
 
+### Access Modifier guidelines:
+
+1. **public**: Use for types and members that form your public API
+2. **internal**: Use for types and members that should be available within your assembly but not externally
+3. **private**: Use for implementation details inside a class that shouldn't be accessible elsewhere
+4. **protected**: Use for members that should be accessible to derived classes for customization
+5. **protected internal**: Use when both derived classes and code within the assembly need access
+6. **private protected**: Use when derived classes within the same assembly (but not external ones) need access
+
 ## Extension Methods
+
+Extension methods allow you to add methods to existing types without modifying the original type. They're particularly useful for extending types from libraries you can't modify directly or for adding utility methods to common types.
 
 ```csharp
 // Extension methods must be defined in a static class
@@ -2660,6 +3023,8 @@ string truncated = text.Truncate(5); // "Hello"
 ```
 
 ## Properties and Indexers
+
+Properties provide a way to expose fields while adding validation, computed values, or extra logic during access. They're a fundamental part of C# that enables proper encapsulation in object-oriented design.
 
 ```csharp
 public class PropertyDemo
@@ -2707,6 +3072,15 @@ public class PropertyDemo
     }
 }
 ```
+
+**Additional Resources:**
+- [C# Coding Conventions (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/coding-conventions)
+- [Clean Code: A Handbook of Agile Software Craftsmanship (Book by Robert C. Martin)](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882)
+- [File-scoped namespaces (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-10.0/file-scoped-namespaces)
+- [Access Modifiers (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/access-modifiers)
+- [Properties (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/properties)
+
+<div id="end-of-document"></div>
 
 
 ## Wrap Up
