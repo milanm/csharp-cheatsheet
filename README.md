@@ -8,9 +8,11 @@ The cheat sheet is organized from **fundamental concepts to more advanced topics
 
 C# has evolved significantly since its inception, with regular updates introducing powerful new features while maintaining backward compatibility. 
 
-This guide incorporates the latest language enhancements through C# 13 and beyond, performance optimizations, and development approaches that have become standard in the .NET ecosystem.
+This guide incorporates the latest language enhancements **through C# 13 and beyond**, code organization and development approaches that have become standard in the .NET ecosystem.
 
-🔖 Feel free to bookmark this page and refer to it whenever you need to refresh your knowledge of C# language features or modern development techniques.
+🔖 Feel free to **bookmark this page** and refer to it whenever you need to refresh your knowledge of C# language features or modern development techniques.
+
+![C# Mind map](csharp-mindmap.png)
 
 ## Support My Work
 
