@@ -2,21 +2,23 @@
 
 ## Introduction
 
-This comprehensive C# cheat sheet serves as a quick reference guide for C# developers at all skill levels. It covers the core language features, modern patterns, and best practices as of 2025. The cheat sheet is organized from fundamental concepts to more advanced topics, making it useful for both learning and reference purposes.
+This comprehensive C# cheat sheet serves as a quick reference guide for C# developers at all skill levels. It covers the core language features, modern patterns, and best practices as of 2025. 
 
-C# has evolved significantly since its inception, with regular updates introducing powerful new features while maintaining backward compatibility. This guide incorporates the latest language enhancements through C# 12 and beyond, modern architectural patterns, performance optimizations, and development approaches that have become standard in the .NET ecosystem.
+The cheat sheet is organized from **fundamental concepts to more advanced topics**, making it useful for both learning and reference purposes.
 
-Whether you're building web applications, microservices, desktop software, mobile apps, or games, you'll find relevant syntax examples and patterns to accelerate your development process. Feel free to bookmark this page and refer to it whenever you need to refresh your knowledge of C# language features or modern development techniques.
+C# has evolved significantly since its inception, with regular updates introducing powerful new features while maintaining backward compatibility. 
+
+This guide incorporates the latest language enhancements through C# 13 and beyond, performance optimizations, and development approaches that have become standard in the .NET ecosystem.
+
+Whether you're building web applications, microservices, desktop software, mobile apps, or games, you'll find relevant syntax examples and patterns to accelerate your development process. 
+
+🔖 Feel free to bookmark this page and refer to it whenever you need to refresh your knowledge of C# language features or modern development techniques.
 
 ## Support My Work
 
 If you find this repository helpful, consider supporting me on Patreon:
 
 [![Patreon](patreon.png)](https://www.patreon.com/techworld_with_milan)
-
-## Disclaimer
-
-> This roadmap aims to give you an idea about the landscape. The road map will guide you if you need clarification about what to learn next rather than encouraging you to pick what is hype and trendy. It would help if you grew some understanding of why one tool would be better suited for some cases than the other and remember that hype and trendy only sometimes mean best suited for the job.
 
 ## Give a Star! :star:
 
@@ -26,17 +28,17 @@ If you like or are using this project to learn or start your solution, please gi
 
 - [Comments](#comments)
 - [Strings](#strings)
-- [Basic Types and Literals](#basic-types-and-literals)
+- [Basic types and literals](#basic-types-and-literals)
 - [Methods and Functions](#methods-and-functions)
-  - [Basic Method Syntax](#basic-method-syntax)
-  - [Expression-bodied Members](#expression-bodied-members-c-60)
-  - [Method Parameters](#method-parameters)
-  - [Local Functions](#local-functions-c-70)
-  - [Extension Methods](#extension-methods)
-  - [Lambda Expressions](#lambda-expressions)
-  - [Method Overloading](#method-overloading)
+  - [Basic method syntax](#basic-method-syntax)
+  - [Expression-bodied members](#expression-bodied-members-c-60)
+  - [Method parameters](#method-parameters)
+  - [Local functions](#local-functions-c-70)
+  - [Extension methods](#extension-methods)
+  - [Lambda expressions](#lambda-expressions)
+  - [Method overloading](#method-overloading)
 - [Collections](#collections)
-  - [Collection Expressions](#collection-expressions-c-12)
+  - [Collection expressions](#collection-expressions-c-12)
   - [Arrays](#arrays)
   - [Lists](#lists)
   - [Dictionary](#dictionary)
@@ -52,54 +54,42 @@ If you like or are using this project to learn or start your solution, please gi
   - [Enums](#enums)
   - [Tuples](#tuples)
   - [Nullable Types](#nullable-types)
-- [Pattern Matching](#pattern-matching)
-  - [Type Patterns](#type-patterns)
-  - [Property Patterns](#property-patterns)
-  - [Tuple Patterns](#tuple-patterns)
-  - [Logical Patterns](#logical-patterns)
-  - [List Patterns](#list-patterns-c-110)
-  - [Discard Pattern](#discard-pattern)
+- [Pattern matching](#pattern-matching)
+  - [Type patterns](#type-patterns)
+  - [Property patterns](#property-patterns)
+  - [Tuple patterns](#tuple-patterns)
+  - [Logical patterns](#logical-patterns)
+  - [List patterns](#list-patterns-c-110)
+  - [Discard patterns](#discard-pattern)
 - [Exceptions](#exceptions)
   - [Try-Catch-Finally](#try-catch-finally)
-  - [Throwing Exceptions](#throwing-exceptions)
-  - [Custom Exceptions](#custom-exceptions)
-  - [Using Statement](#using-statement)
-- [Classes and Inheritance](#classes-and-inheritance)
-  - [Primary Constructors](#primary-constructors-c-12)
+  - [Throwing exceptions](#throwing-exceptions)
+  - [Custom exceptions](#custom-exceptions)
+  - [Using sStatement](#using-statement)
+- [Classes and inheritance](#classes-and-inheritance)
+  - [Primary constructors](#primary-constructors-c-12)
   - [Inheritance](#inheritance)
-  - [Abstract Classes](#abstract-classes)
-  - [Sealed Classes and Members](#sealed-classes-and-members)
-  - [Constructors and Initialization](#constructors-and-initialization)
+  - [Abstract classes](#abstract-classes)
+  - [Sealed classes and members](#sealed-classes-and-members)
+  - [Constructors and initialization](#constructors-and-initialization)
   - [Polymorphism](#polymorphism)
-- [Interfaces and Default Implementation](#interfaces-and-default-implementation)
-  - [Basic Interface Implementation](#basic-interface-implementation)
-  - [Multiple Interface Implementation](#multiple-interface-implementation)
-  - [Explicit Interface Implementation](#explicit-interface-implementation)
-  - [Default Interface Methods](#default-interface-methods-c-80)
-  - [Interface Properties](#interface-properties)
-  - [Generic Interfaces](#generic-interfaces)
-- [Modern C# Patterns and Performance](#modern-c-patterns-and-performance)
-  - [Native AOT](#native-aot-ahead-of-time-compilation)
-  - [Modern Dependency Injection](#modern-dependency-injection)
-  - [Minimal APIs](#minimal-apis-aspnet-core)
-  - [CQRS and MediatR Pattern](#cqrs-and-mediatr-pattern)
-- [Asynchronous Programming](#asynchronous-programming)
-  - [Async and Await Basics](#async-and-await-basics)
-  - [Task-based Asynchronous Pattern](#task-based-asynchronous-pattern)
-  - [Exception Handling in Async Code](#exception-handling-in-async-code)
-  - [Cancellation in Async Operations](#cancellation-in-async-operations)
-  - [ValueTask and Async Streams](#valuetask-and-async-streams-c-80)
-- [Performance Optimization](#performance-optimization)
-  - [High-Performance Techniques](#high-performance-techniques)
-  - [Memory Management](#memory-management)
-- [Code Organization](#code-organization)
+- [Asynchronous programming](#asynchronous-programming)
+  - [Async and await basics](#async-and-await-basics)
+  - [Task-based asynchronous pattern](#task-based-asynchronous-pattern)
+  - [Exception handling in async code](#exception-handling-in-async-code)
+  - [Cancellation in async operations](#cancellation-in-async-operations)
+  - [ValueTask and async streams](#valuetask-and-async-streams-c-80)
+- [Performance optimization](#performance-optimization)
+  - [High-performance techniques](#high-performance-techniques)
+  - [Memory management](#memory-management)
+- [Code organization](#code-organization)
   - [Namespaces](#namespaces)
-  - [Using Directives](#using-directives)
-  - [File-scoped Types](#file-scoped-types-c-11)
-  - [Partial Classes](#partial-classes)
-  - [Access Modifiers](#access-modifiers)
-  - [Extension Methods](#extension-methods)
-  - [Properties and Indexers](#properties-and-indexers)
+  - [Using directives](#using-directives)
+  - [File-scoped types](#file-scoped-types-c-11)
+  - [Partial classes](#partial-classes)
+  - [Access modifiers](#access-modifiers)
+  - [Extension methods](#extension-methods)
+  - [Properties and indexers](#properties-and-indexers)
 
 <div id="comments"></div>
 
@@ -194,7 +184,7 @@ bool equals = string.Equals("abc", "ABC", StringComparison.OrdinalIgnoreCase); /
 int comparison = string.Compare("abc", "ABC", StringComparison.Ordinal); // not equal
 ```
 
-For better performance with repeated string concatenation, use `StringBuilder`:
+For better performance with repeated string concatenation (as String is immutable type), use `StringBuilder`:
 
 ```csharp
 using System.Text;
@@ -208,16 +198,18 @@ string result = sb.ToString();
 ```
 
 **Additional Resources:**
-- [String Class (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/api/system.string)
-- [String Interpolation (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/tokens/interpolated)
-- [Raw String Literals (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-11.0/raw-string-literal)
-- [String Performance Best Practices](https://learn.microsoft.com/en-us/dotnet/standard/base-types/best-practices-strings)
+- [String class (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/api/system.string)
+- [String interpolation (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/tokens/interpolated)
+- [Raw String literals (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-11.0/raw-string-literal)
+- [String performance best practices](https://learn.microsoft.com/en-us/dotnet/standard/base-types/best-practices-strings)
 
 <div id="basic-types-and-literals"></div>
 
-# Basic Types and Literals
+# Basic types and literals
 
-C# is a strongly-typed language with a comprehensive type system that forms the foundation of all C# programs. Understanding these basic types is essential for writing efficient and type-safe code. C# types are categorized as value types (stored on the stack) and reference types (stored on the heap), each with different memory and performance characteristics.
+C# is a strongly-typed language with a comprehensive type system that forms the foundation of all C# programs. Understanding these basic types is essential for writing efficient and type-safe code. 
+
+C# types are categorized as **value types (stored on the stack)** and **reference types (stored on the heap)**, each with different memory and performance characteristics.
 
 ```csharp
 // Integer types
@@ -304,19 +296,21 @@ public required string Name { get; init; }
 ```
 
 **Additional Resources:**
-- [Built-in Types (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/built-in-types)
-- [Value Types (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-types)
-- [Reference Types (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/reference-types)
+- [Built-in types (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/built-in-types)
+- [Value types (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-types)
+- [Reference types (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/reference-types)
 - [Constants (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/const)
-- [DateOnly and TimeOnly Types (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-6#dateonly-and-timeonly)
+- [DateOnly and timeOnly types (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-6#dateonly-and-timeonly)
 
 <div id="methods-and-functions"></div>
 
-# Methods and Functions
+# Methods and functions
 
-Methods are the fundamental building blocks of C# programs that encapsulate behavior and logic. They provide a way to organize code into reusable units, improving maintainability and readability. C# offers various ways to define methods with different parameter types, return values, and syntax options to accommodate different programming styles and needs.
+Methods are the fundamental building blocks of C# programs that encapsulate behavior and logic. They provide a way to organize code into reusable units, improving maintainability and readability. 
 
-## Basic Method Syntax
+C# offers various ways to define methods with different parameter types, return values, and syntax options to accommodate different programming styles and needs.
+
+## Basic method syntax
 
 ```csharp
 // Instance method
@@ -338,7 +332,7 @@ public void PrintMessage(string message)
 }
 ```
 
-## Expression-bodied Members (C# 6.0+)
+## Expression-bodied members (C# 6.0+)
 
 Expression-bodied members provide a concise syntax for methods, properties, and other members that can be represented by a single expression.
 
@@ -350,7 +344,7 @@ public int Multiply(int a, int b) => a * b;
 public string FullName => $"{FirstName} {LastName}";
 ```
 
-## Method Parameters
+## Method parameters
 
 C# provides flexible parameter passing options to handle different programming scenarios.
 
@@ -400,7 +394,7 @@ public int Sum(params int[] numbers)
 // Usage: Sum(1, 2, 3, 4, 5);
 ```
 
-## Local Functions (C# 7.0+)
+## Local functions (C# 7.0+)
 
 Local functions allow you to define methods inside other methods, encapsulating helper logic that is only relevant to the containing method.
 
@@ -418,7 +412,7 @@ public int Factorial(int n)
 }
 ```
 
-## Extension Methods
+## Extension methods
 
 Extension methods allow you to add methods to existing types without modifying the original type, making them particularly useful for extending types you don't control.
 
@@ -446,7 +440,7 @@ bool isEmpty = text.IsNullOrEmpty(); // false
 string truncated = text.Truncate(5); // "Hello"
 ```
 
-## Lambda Expressions
+## Lambda expressions
 
 Lambda expressions provide a concise way to create anonymous functions, especially useful for LINQ queries, event handlers, and functional programming patterns.
 
@@ -475,7 +469,7 @@ Func<int, int> factorial = n =>
 };
 ```
 
-## Method Overloading
+## Method overloading
 
 Method overloading allows multiple methods with the same name but different parameter lists, providing flexibility in how a method can be called.
 
@@ -497,12 +491,12 @@ public void Display(int value, string format)
 }
 ```
 
-**Additional Resources:**
+**Additional resources:**
 - [Methods (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/methods)
-- [Expression-bodied Members (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/expression-bodied-members)
-- [Method Parameters (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/method-parameters)
-- [Extension Methods (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/extension-methods)
-- [Lambda Expressions (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/lambda-expressions)
+- [Expression-bodied members (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/expression-bodied-members)
+- [Method parameters (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/method-parameters)
+- [Extension methods (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/extension-methods)
+- [Lambda expressions (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/lambda-expressions)
 
 <div id="collections"></div>
 
@@ -516,10 +510,10 @@ Collection expressions are a concise way to initialize collections, introduced i
 
 ```csharp
 // Creating collections with the new collection expressions syntax
-int[] numbers = [1, 2, 3, 4, 5];            // Array
-List<string> names = ["Alice", "Bob", "Charlie"]; // List
-HashSet<char> letters = ['a', 'b', 'c'];    // HashSet
-Dictionary<string, int> ages = [             // Dictionary
+int[] numbers = [1, 2, 3, 4, 5];                   // Array
+List<string> names = ["Alice", "Bob", "Charlie"];  // List
+HashSet<char> letters = ['a', 'b', 'c'];           // HashSet
+Dictionary<string, int> ages = [                   // Dictionary
     "Alice" => 30,
     "Bob" => 25,
     "Charlie" => 35
@@ -539,19 +533,19 @@ Arrays are fixed-size collections of elements of the same type. They provide eff
 
 ```csharp
 // Declaration and initialization
-int[] numbers = new int[5];          // Array of 5 integers with default values (0)
-int[] initialized = new int[] { 1, 2, 3, 4, 5 };  // Initialized array
-int[] shorthand = { 1, 2, 3, 4, 5 }; // Shorthand initialization
+int[] numbers = new int[5];                      // Array of 5 integers with default values (0)
+int[] initialized = new int[] { 1, 2, 3, 4, 5 }; // Initialized array
+int[] shorthand = { 1, 2, 3, 4, 5 };             // Shorthand initialization
 string[] names = { "Alice", "Bob", "Charlie" };
 
 // Accessing elements
-int firstNumber = numbers[0];         // First element (zero-based indexing)
-numbers[0] = 10;                      // Assign value to first element
+int firstNumber = numbers[0];                     // First element (zero-based indexing)
+numbers[0] = 10;                                  // Assign value to first element
 
 // Multi-dimensional arrays
-int[,] matrix = new int[3, 3];        // 3x3 2D array
-matrix[0, 0] = 1;                     // Assign to specific position
-int[,] initialized2D = {              // Initialize 2D array
+int[,] matrix = new int[3, 3];                    // 3x3 2D array
+matrix[0, 0] = 1;                                 // Assign to specific position
+int[,] initialized2D = {                          // Initialize 2D array
     { 1, 2, 3 },
     { 4, 5, 6 },
     { 7, 8, 9 }
@@ -564,10 +558,10 @@ jagged[1] = new int[] { 4, 5 };
 jagged[2] = new int[] { 6, 7, 8, 9 };
 
 // Array properties and methods
-int length = numbers.Length;          // Number of elements
-Array.Sort(numbers);                  // Sort array in-place
-Array.Reverse(numbers);               // Reverse array in-place
-int index = Array.IndexOf(names, "Bob"); // Find index of element
+int length = numbers.Length;                      // Number of elements
+Array.Sort(numbers);                              // Sort array in-place
+Array.Reverse(numbers);                           // Reverse array in-place
+int index = Array.IndexOf(names, "Bob");          // Find index of element
 bool exists = Array.Exists(numbers, n => n > 10); // Check if condition exists
 ```
 
@@ -579,34 +573,34 @@ Lists are dynamic arrays that can grow or shrink in size. They provide flexibili
 using System.Collections.Generic;
 
 // Create a list
-List<string> names = new List<string>();        // Empty list
-List<int> numbers = new List<int> { 1, 2, 3 };  // Initialized list
+List<string> names = new List<string>();          // Empty list
+List<int> numbers = new List<int> { 1, 2, 3 };    // Initialized list
 
-// Add elements
-names.Add("Alice");                   // Add single element
-names.AddRange(new[] { "Bob", "Charlie" }); // Add multiple elements
+// Add elements  
+names.Add("Alice");                               // Add single element
+names.AddRange(new[] { "Bob", "Charlie" });       // Add multiple elements
 
 // Access elements
-string first = names[0];              // Access by index
-names[0] = "Alicia";                  // Modify by index
+string first = names[0];                          // Access by index
+names[0] = "Alicia";                              // Modify by index
 
 // Remove elements
-names.Remove("Bob");                  // Remove specific element
-names.RemoveAt(0);                    // Remove element at index
-names.RemoveAll(x => x.StartsWith("C")); // Remove all that match condition
-names.Clear();                        // Remove all elements
+names.Remove("Bob");                              // Remove specific element
+names.RemoveAt(0);                                // Remove element at index
+names.RemoveAll(x => x.StartsWith("C"));          // Remove all that match condition
+names.Clear();                                    // Remove all elements
 
 // Search and query
-bool contains = numbers.Contains(2);  // Check if contains value
-int index = numbers.IndexOf(3);       // Find index of element
+bool contains = numbers.Contains(2);              // Check if contains value
+int index = numbers.IndexOf(3);                   // Find index of element
 List<int> filtered = numbers.FindAll(n => n > 1); // Find all matching elements
-int found = numbers.Find(n => n > 2); // Find first matching element
+int found = numbers.Find(n => n > 2);             // Find first matching element
 
 // Other operations
-int count = numbers.Count;            // Number of elements
-numbers.Sort();                       // Sort list in-place
-numbers.Reverse();                    // Reverse list in-place
-numbers.ForEach(n => Console.WriteLine(n)); // Perform action on each element
+int count = numbers.Count;                       // Number of elements
+numbers.Sort();                                  // Sort list in-place
+numbers.Reverse();                               // Reverse list in-place
+numbers.ForEach(n => Console.WriteLine(n));      // Perform action on each element
 ```
 
 ## Dictionary
@@ -779,10 +773,10 @@ var queryResult = from n in numbers
 ```
 
 **Additional Resources:**
-- [Collections Overview (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/collections/)
-- [Collection Expressions (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/collection-expressions)
+- [Collections overview (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/collections/)
+- [Collection expressions (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/collection-expressions)
 - [LINQ (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/)
-- [Choosing a Collection Type (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/collections/selecting-a-collection-class)
+- [Choosing a collection type (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/collections/selecting-a-collection-class)
 - [System.Collections.Generic Namespace (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic)
 
 <div id="data-types"></div>
@@ -977,6 +971,33 @@ public class Circle : IShape
 }
 ```
 
+From C# 8.0, interfaces can have **default implementations for methods and properties**, allowing you to provide a base implementation that can be overridden by implementing classes.
+
+```csharp
+public interface ILogger
+{
+    void Log(string message);
+    
+    // Default implementation
+    void LogError(string message) => Log($"ERROR: {message}");
+    void LogWarning(string message) => Log($"WARNING: {message}");
+    
+    // Static method in interface
+    static string FormatMessage(string level, string message) => $"[{level}] {message}";
+}
+
+// Implement only required methods
+public class MinimalLogger : ILogger
+{
+    public void Log(string message)
+    {
+        Console.WriteLine(message);
+    }
+    
+    // Other methods use default implementations
+}
+```
+
 ## Enums
 
 Enums define a set of named constants.
@@ -1101,11 +1122,11 @@ nullableString ??= "Default";
 
 <div id="pattern-matching"></div>
 
-# Pattern Matching
+# Pattern matching
 
 C# supports various pattern matching techniques for more expressive conditional logic.
 
-## Type Patterns
+## Type patterns
 
 ```csharp
 // Type pattern - check if object is of a specific type
@@ -1129,7 +1150,7 @@ string GetDisplayName(object item) => item switch
 };
 ```
 
-## Property Patterns
+## Property patterns
 
 ```csharp
 // Property pattern to match object properties
@@ -1154,7 +1175,7 @@ if (order is { Customer: { Name: "Alice" } })
 }
 ```
 
-## Tuple Patterns
+## Tuple patterns
 
 ```csharp
 // Tuple pattern
@@ -1172,7 +1193,7 @@ string GetQuadrant(int x, int y) => (x, y) switch
 };
 ```
 
-## Logical Patterns
+## Logical patterns
 
 ```csharp
 // 'and', 'or', and 'not' patterns (C# 9.0+)
@@ -1192,7 +1213,7 @@ string CheckValue(int value) => value switch
 };
 ```
 
-## List Patterns (C# 11.0+)
+## List patterns (C# 11.0+)
 
 ```csharp
 // List pattern in C# 11
@@ -1210,7 +1231,7 @@ string DescribeArray(int[] arr) => arr switch
 };
 ```
 
-## Discard Pattern
+## Discard pattern
 
 ```csharp
 // Discard pattern (underscore) to ignore values
@@ -1230,7 +1251,7 @@ var (name, _) = person; // Discard the age
 
 # Exceptions
 
-Exception handling is a critical aspect of robust C# applications, allowing you to gracefully manage errors and unexpected conditions. Well-designed exception handling balances providing useful feedback to users, maintaining application stability, and preserving valuable diagnostic information for developers.
+Exception handling is a critical aspect of robust C# applications, which allows you to manage errors and unexpected conditions. Well-designed exception handling balances providing useful feedback to users, maintaining application stability, and preserving valuable diagnostic information for developers.
 
 ## Try-Catch-Finally
 
@@ -1280,9 +1301,9 @@ finally
 }
 ```
 
-## When to Use Different Exception Approaches
+## When to use different Exception approaches
 
-1. **Specific vs. General Exception catching**:
+1. **Specific vs. general Exception catching**:
    - Catch specific exceptions when you can handle them in a meaningful way
    - Only catch `Exception` as a last resort to log unexpected errors or provide generic fallbacks
    - Avoid empty catch blocks that swallow exceptions without handling them
@@ -1290,14 +1311,12 @@ finally
 2. **Exception filters**:
    - Use when you only want to catch exceptions that meet certain criteria
    - Helps avoid unnecessary exception handling and maintain more precise control flow
-   - Can include methods that perform logging without handling the exception (side-effect logging)
 
 3. **Re-throwing Exceptions**:
    - Use `throw;` (without specified exception) to preserve the original stack trace
    - Only use `throw ex;` when you want to deliberately reset the stack trace (rarely needed)
-   - Consider wrapping in a more appropriate exception type when crossing abstraction boundaries
 
-4. **Exception Prevention vs. Handling**:
+4. **Exception prevention**:
    - Use `TryParse` patterns and null checking to prevent exceptions when possible
    - Reserve exception handling for truly exceptional conditions, not for normal control flow
    - Consider validation before operations that might throw exceptions
@@ -1346,7 +1365,7 @@ catch (Exception ex)
 }
 ```
 
-## Guidelines for Exception Types:
+## Guidelines for Exception types:
 
 1. **System.ArgumentException**: Use when a method argument is invalid
 2. **System.ArgumentNullException**: Use when an argument is unexpectedly null
@@ -1407,7 +1426,7 @@ void ProcessCustomer(int customerId)
 }
 ```
 
-## Using Statement
+## Using statement
 
 The `using` statement ensures that disposable resources are properly cleaned up, even if exceptions occur. It's an essential pattern for working with resources like files, network connections, and database connections that need to be explicitly released.
 
@@ -1442,7 +1461,7 @@ binaryWriter.Write(42);
 // Both binaryWriter and fileStream are disposed at end of scope
 ```
 
-## Performance Considerations
+## Performance considerations
 
 Exception handling has performance implications that should be considered in your design:
 
@@ -1452,18 +1471,73 @@ Exception handling has performance implications that should be considered in you
 4. Reserve exceptions for truly exceptional conditions that shouldn't happen in normal operation
 5. Consider using status return codes or `Result<T>` pattern for expected error conditions in performance-critical code
 
-**Additional Resources:**
-- [Exception Handling (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/exceptions/)
-- [Best Practices for Exceptions (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/exceptions/best-practices-for-exceptions)
-- [Creating and Throwing Exceptions (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/exceptions/how-to-create-user-defined-exceptions)
-- [IDisposable Pattern (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-dispose)
-- [Exception Handling in Async Code (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/exception-handling-task-asynchronous-pattern)
+**Additional resources:**
+- [Exception handling (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/exceptions/)
+- [Best practices for Exceptions (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/exceptions/best-practices-for-exceptions)
+- [Creating and throwing Exceptions (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/exceptions/how-to-create-user-defined-exceptions)
+- [IDisposable pattern (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-dispose)
+- [Exception handling in async code (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/exception-handling-task-asynchronous-pattern)
 
 <div id="classes-and-inheritance"></div>
 
 # Classes and Inheritance
 
-Classes are the foundation of object-oriented programming in C#, serving as blueprints for creating objects that encapsulate data and behavior. Inheritance is a powerful mechanism that enables code reuse and polymorphism by allowing classes to inherit attributes and methods from parent classes. Proper use of these features helps create maintainable, extensible code with clear hierarchies.
+**Classes** are the foundation of object-oriented programming in C#, serving as blueprints for creating objects that encapsulate data and behavior. 
+
+**Inheritance** is a powerful mechanism that enables code reuse and polymorphism by allowing classes to inherit attributes and methods from parent classes. 
+
+Proper use of these features helps create maintainable, extensible code with clear hierarchies.
+
+## Constructors and initialization
+
+Constructors are special methods that initialize objects. They set initial state, enforce invariants, and can chain to other constructors to share initialization logic. Understanding constructor patterns is essential for creating maintainable class hierarchies.
+
+```csharp
+public class Person
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+    
+    // Default constructor
+    public Person()
+    {
+        Name = "Unknown";
+        Age = 0;
+    }
+    
+    // Parameterized constructor
+    public Person(string name, int age)
+    {
+        Name = name;
+        Age = age;
+    }
+    
+    // Static constructor (called once before type is used)
+    static Person()
+    {
+        Console.WriteLine("Person type initialized");
+    }
+}
+
+// Constructor chaining
+public class Employee : Person
+{
+    public string Department { get; set; }
+    
+    // Call the base class constructor
+    public Employee(string name, int age, string department) 
+        : base(name, age)
+    {
+        Department = department;
+    }
+    
+    // Chain to another constructor in the same class
+    public Employee(string name, int age)
+        : this(name, age, "General")
+    {
+    }
+}
+```
 
 ## Primary Constructors (C# 12+)
 
@@ -1552,7 +1626,7 @@ public class Dog : Animal
 }
 ```
 
-## Abstract Classes
+## Abstract classes
 
 Abstract classes serve as incomplete templates that cannot be instantiated directly but must be inherited by concrete classes. They're useful when you want to define common functionality while forcing derived classes to implement specific methods. An abstract class can have both abstract members (without implementation) and concrete members (with implementation).
 
@@ -1591,7 +1665,7 @@ public class Rectangle : Shape
 }
 ```
 
-## Sealed Classes and Members
+## Sealed classes and members
 
 Sealed classes prevent inheritance, making them useful for security-sensitive classes or when inheritance would break functionality. Sealed methods prevent further overriding in derived classes, ensuring that specific implementations remain unchanged throughout the inheritance chain.
 
@@ -1623,57 +1697,6 @@ public class Further : Derived
 {
     public override void Method1() { } // OK
     // public override void Method2() { } // Error: cannot override sealed method
-}
-```
-
-## Constructors and Initialization
-
-Constructors are special methods that initialize objects. They set initial state, enforce invariants, and can chain to other constructors to share initialization logic. Understanding constructor patterns is essential for creating maintainable class hierarchies.
-
-```csharp
-public class Person
-{
-    public string Name { get; set; }
-    public int Age { get; set; }
-    
-    // Default constructor
-    public Person()
-    {
-        Name = "Unknown";
-        Age = 0;
-    }
-    
-    // Parameterized constructor
-    public Person(string name, int age)
-    {
-        Name = name;
-        Age = age;
-    }
-    
-    // Static constructor (called once before type is used)
-    static Person()
-    {
-        Console.WriteLine("Person type initialized");
-    }
-}
-
-// Constructor chaining
-public class Employee : Person
-{
-    public string Department { get; set; }
-    
-    // Call the base class constructor
-    public Employee(string name, int age, string department) 
-        : base(name, age)
-    {
-        Department = department;
-    }
-    
-    // Chain to another constructor in the same class
-    public Employee(string name, int age)
-        : this(name, age, "General")
-    {
-    }
 }
 ```
 
@@ -1719,624 +1742,34 @@ When designing class hierarchies, consider these guidelines:
 - Implement interfaces for defining capabilities that can be shared across unrelated classes
 
 **Additional Resources:**
-- [Classes and Objects (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/object-oriented/classes-and-objects)
+- [Classes and objects (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/object-oriented/classes-and-objects)
 - [Inheritance (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/object-oriented/inheritance)
-- [Abstract Classes and Methods (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/abstract)
-- [Primary Constructors (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-12.0/primary-constructors)
-- [C# Object-Oriented Programming Best Practices (Microsoft Learn)](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/object-oriented-programming)
+- [Abstract classes and methods (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/abstract)
+- [Primary constructors (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-12.0/primary-constructors)
+- [C# object-oriented programming best practices (Microsoft Learn)](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/object-oriented-programming)
+
 
 <div id="interfaces-and-default-implementation"></div>
-
-```csharp
-// Base class
-public class Animal
-{
-    public string Name { get; set; }
-    
-    public Animal(string name)
-    {
-        Name = name;
-    }
-    
-    public virtual void MakeSound()
-    {
-        Console.WriteLine("Some generic animal sound");
-    }
-    
-    // Non-overridable method
-    public void Sleep()
-    {
-        Console.WriteLine($"{Name} is sleeping");
-    }
-}
-
-// Derived class
-public class Dog : Animal
-{
-    public string Breed { get; set; }
-    
-    public Dog(string name, string breed) : base(name)
-    {
-        Breed = breed;
-    }
-    
-    // Override base class method
-    public override void MakeSound()
-    {
-        Console.WriteLine("Woof!");
-    }
-    
-    // New method
-    public void Fetch()
-    {
-        Console.WriteLine($"{Name} is fetching the ball");
-    }
-}
-```
-
-## Abstract Classes
-
-```csharp
-// Abstract class
-public abstract class Shape
-{
-    // Abstract property (must be implemented)
-    public abstract double Area { get; }
-    
-    // Abstract method (must be implemented)
-    public abstract double Perimeter();
-    
-    // Concrete method
-    public void PrintInfo()
-    {
-        Console.WriteLine($"Area: {Area}, Perimeter: {Perimeter()}");
-    }
-}
-
-// Concrete implementation
-public class Rectangle : Shape
-{
-    public double Width { get; set; }
-    public double Height { get; set; }
-    
-    public Rectangle(double width, double height)
-    {
-        Width = width;
-        Height = height;
-    }
-    
-    public override double Area => Width * Height;
-    
-    public override double Perimeter() => 2 * (Width + Height);
-}
-```
-
-## Sealed Classes and Members
-
-```csharp
-// Sealed class (cannot be inherited)
-public sealed class Utility
-{
-    public static void DoSomething() { }
-}
-
-public class Base
-{
-    // Virtual method that can be overridden
-    public virtual void Method1() { }
-    
-    // Sealed method (can't be overridden further in inheritance chain)
-    public virtual void Method2() { }
-}
-
-public class Derived : Base
-{
-    public override void Method1() { }
-    
-    public sealed override void Method2() { }
-}
-
-public class Further : Derived
-{
-    public override void Method1() { } // OK
-    // public override void Method2() { } // Error: cannot override sealed method
-}
-```
-
-## Constructors and Initialization
-
-```csharp
-public class Person
-{
-    public string Name { get; set; }
-    public int Age { get; set; }
-    
-    // Default constructor
-    public Person()
-    {
-        Name = "Unknown";
-        Age = 0;
-    }
-    
-    // Parameterized constructor
-    public Person(string name, int age)
-    {
-        Name = name;
-        Age = age;
-    }
-    
-    // Static constructor (called once before type is used)
-    static Person()
-    {
-        Console.WriteLine("Person type initialized");
-    }
-}
-
-// Constructor chaining
-public class Employee : Person
-{
-    public string Department { get; set; }
-    
-    // Call the base class constructor
-    public Employee(string name, int age, string department) 
-        : base(name, age)
-    {
-        Department = department;
-    }
-    
-    // Chain to another constructor in the same class
-    public Employee(string name, int age)
-        : this(name, age, "General")
-    {
-    }
-}
-```
-
-## Polymorphism
-
-```csharp
-// Base class reference can refer to derived class objects
-Animal myPet = new Dog("Fido", "Beagle");
-myPet.MakeSound(); // Outputs "Woof!"
-
-// Array of base class can hold derived objects
-Animal[] animals = new Animal[]
-{
-    new Dog("Fido", "Beagle"),
-    new Cat("Whiskers"),
-    new Rabbit("Hopper")
-};
-
-// Polymorphic behavior
-foreach (Animal animal in animals)
-{
-    Console.WriteLine($"{animal.Name} says:");
-    animal.MakeSound(); // Each animal makes its own sound
-}
-
-// Type checking and casting
-if (animals[0] is Dog dog)
-{
-    dog.Fetch(); // Access Dog-specific method
-}
-
-// Explicit casting
-Dog anotherDog = (Dog)animals[0];
-```
-
-<div id="interfaces-and-default-implementation"></div>
-
-# Interfaces and Default Implementation
-
-## Basic Interface Implementation
-
-```csharp
-// Define an interface
-public interface ILogger
-{
-    void Log(string message);
-    void LogError(string message);
-}
-
-// Class implementing the interface
-public class ConsoleLogger : ILogger
-{
-    public void Log(string message)
-    {
-        Console.WriteLine($"INFO: {message}");
-    }
-    
-    public void LogError(string message)
-    {
-        Console.WriteLine($"ERROR: {message}");
-    }
-}
-
-// Usage
-ILogger logger = new ConsoleLogger();
-logger.Log("Application started");
-```
-
-## Multiple Interface Implementation
-
-```csharp
-public interface IReadable
-{
-    string Read();
-}
-
-public interface IWritable
-{
-    void Write(string content);
-}
-
-// Implement multiple interfaces
-public class TextFile : IReadable, IWritable
-{
-    private string content = "";
-    
-    public string Read()
-    {
-        return content;
-    }
-    
-    public void Write(string newContent)
-    {
-        content = newContent;
-    }
-}
-
-// Usage
-TextFile file = new TextFile();
-file.Write("Hello, World!");
-
-IReadable reader = file;
-Console.WriteLine(reader.Read());
-
-IWritable writer = file;
-writer.Write("New content");
-```
-
-## Explicit Interface Implementation
-
-```csharp
-public interface IControl
-{
-    void Paint();
-}
-
-public interface IWindow
-{
-    void Paint();
-}
-
-// Explicit implementation to resolve method name conflicts
-public class Form : IControl, IWindow
-{
-    // Explicit implementation for IControl
-    void IControl.Paint()
-    {
-        Console.WriteLine("Painting as a control");
-    }
-    
-    // Explicit implementation for IWindow
-    void IWindow.Paint()
-    {
-        Console.WriteLine("Painting as a window");
-    }
-    
-    // Class's own implementation
-    public void Paint()
-    {
-        Console.WriteLine("Form's paint method");
-    }
-}
-
-// Usage
-Form form = new Form();
-form.Paint(); // Calls Form's method
-
-IControl control = form;
-control.Paint(); // Calls IControl's implementation
-
-IWindow window = form;
-window.Paint(); // Calls IWindow's implementation
-```
-
-## Default Interface Methods (C# 8.0+)
-
-```csharp
-public interface ILogger
-{
-    void Log(string message);
-    
-    // Default implementation
-    void LogError(string message) => Log($"ERROR: {message}");
-    void LogWarning(string message) => Log($"WARNING: {message}");
-    
-    // Static method in interface
-    static string FormatMessage(string level, string message) => $"[{level}] {message}";
-}
-
-// Implement only required methods
-public class MinimalLogger : ILogger
-{
-    public void Log(string message)
-    {
-        Console.WriteLine(message);
-    }
-    
-    // Other methods use default implementations
-}
-```
-
-## Interface Properties
-
-```csharp
-public interface IIdentifiable
-{
-    string Id { get; }
-    string Name { get; set; }
-}
-
-public class User : IIdentifiable
-{
-    // Implement as auto-property
-    public string Id { get; } = Guid.NewGuid().ToString();
-    
-    // Implement with backing field
-    private string _name;
-    public string Name
-    {
-        get => _name;
-        set => _name = value ?? throw new ArgumentNullException(nameof(value));
-    }
-}
-```
-
-## Generic Interfaces
-
-```csharp
-public interface IRepository<T>
-{
-    T GetById(int id);
-    void Save(T entity);
-    void Delete(int id);
-    IEnumerable<T> GetAll();
-}
-
-public class CustomerRepository : IRepository<Customer>
-{
-    private readonly List<Customer> _customers = new List<Customer>();
-    
-    public Customer GetById(int id)
-    {
-        return _customers.FirstOrDefault(c => c.Id == id);
-    }
-    
-    public void Save(Customer entity)
-    {
-        _customers.Add(entity);
-    }
-    
-    public void Delete(int id)
-    {
-        _customers.RemoveAll(c => c.Id == id);
-    }
-    
-    public IEnumerable<Customer> GetAll()
-    {
-        return _customers;
-    }
-}
-```
-
-<div id="async-programming"></div>
-
-# Modern C# Patterns and Performance
-
-## Native AOT (Ahead-of-Time) Compilation
-
-Native AOT compiles C# code directly to native code for improved startup time and reduced memory usage.
-
-```csharp
-// Add to .csproj file
-<PropertyGroup>
-  <PublishAot>true</PublishAot>
-</PropertyGroup>
-
-// Assembly trimming hints
-[assembly: System.Runtime.CompilerServices.DisableRuntimeMarshalling]
-
-// Trimming annotations
-[System.Diagnostics.CodeAnalysis.DynamicallyAccessedMembers(System.Diagnostics.CodeAnalysis.DynamicallyAccessedMemberTypes.All)]
-public class MyType { }
-
-// Optimizing code for AOT
-// - Avoid reflection
-// - Use static delegates instead of instance methods for callbacks
-// - Prefer structs for small data structures
-// - Use the SkipLocalsInit attribute for performance-critical methods
-[System.Runtime.CompilerServices.SkipLocalsInit]
-public static void PerformanceMethod() { }
-```
-
-## Modern Dependency Injection
-
-```csharp
-// Program.cs in ASP.NET Core or Worker Service
-var builder = WebApplication.CreateBuilder(args);
-
-// Service lifetimes
-builder.Services.AddSingleton<IDataService, DataService>();     // Single instance for app lifetime
-builder.Services.AddScoped<IUserService, UserService>();        // New instance per scope (e.g., per HTTP request)
-builder.Services.AddTransient<IRandomService, RandomService>(); // New instance each time requested
-
-// Generic open types
-builder.Services.AddSingleton(typeof(IRepository<>), typeof(EntityRepository<>));
-
-// Factory methods
-builder.Services.AddSingleton<IApiClient>(provider => 
-    new ApiClient(provider.GetRequiredService<IConfiguration>()["ApiKey"]));
-
-// Configuration binding
-builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection("Api"));
-
-// Keyed services (.NET 8+)
-builder.Services.AddKeyedSingleton<IEmailSender, GmailSender>("gmail");
-builder.Services.AddKeyedSingleton<IEmailSender, OutlookSender>("outlook");
-
-var app = builder.Build();
-
-// Retrieving keyed services
-using (var scope = app.Services.CreateScope())
-{
-    var gmailSender = scope.ServiceProvider.GetRequiredKeyedService<IEmailSender>("gmail");
-}
-```
-
-## Minimal APIs (ASP.NET Core)
-
-```csharp
-var builder = WebApplication.CreateBuilder(args);
-
-// Add services
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<AppDbContext>();
-
-var app = builder.Build();
-
-// Configure middleware
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-// Define API endpoints
-app.MapGet("/api/users", async (AppDbContext db) => 
-    await db.Users.ToListAsync());
-
-app.MapGet("/api/users/{id}", async (int id, AppDbContext db) =>
-    await db.Users.FindAsync(id) is User user
-        ? Results.Ok(user)
-        : Results.NotFound());
-
-app.MapPost("/api/users", async (User user, AppDbContext db) =>
-{
-    db.Users.Add(user);
-    await db.SaveChangesAsync();
-    return Results.Created($"/api/users/{user.Id}", user);
-});
-
-app.MapDelete("/api/users/{id}", async (int id, AppDbContext db) =>
-{
-    var user = await db.Users.FindAsync(id);
-    if (user is null) return Results.NotFound();
-    
-    db.Users.Remove(user);
-    await db.SaveChangesAsync();
-    return Results.NoContent();
-});
-
-// Authentication/Authorization filter
-app.MapGet("/api/protected", () => "This is protected")
-    .RequireAuthorization();
-
-app.Run();
-```
-
-## CQRS and MediatR Pattern
-
-```csharp
-// Command - represents an action to modify state
-public record CreateUserCommand(string Username, string Email) : IRequest<User>;
-
-// Command handler - handles the command and produces a response
-public class CreateUserHandler : IRequestHandler<CreateUserCommand, User>
-{
-    private readonly AppDbContext _db;
-
-    public CreateUserHandler(AppDbContext db) => _db = db;
-
-    public async Task<User> Handle(CreateUserCommand command, CancellationToken cancellationToken)
-    {
-        var user = new User { Username = command.Username, Email = command.Email };
-        _db.Users.Add(user);
-        await _db.SaveChangesAsync(cancellationToken);
-        return user;
-    }
-}
-
-// Query - represents a request for data
-public record GetUserByIdQuery(int Id) : IRequest<User?>;
-
-// Query handler - handles the query and returns data
-public class GetUserByIdHandler : IRequestHandler<GetUserByIdQuery, User?>
-{
-    private readonly AppDbContext _db;
-
-    public GetUserByIdHandler(AppDbContext db) => _db = db;
-
-    public async Task<User?> Handle(GetUserByIdQuery query, CancellationToken cancellationToken)
-    {
-        return await _db.Users
-            .AsNoTracking()
-            .FirstOrDefaultAsync(u => u.Id == query.Id, cancellationToken);
-    }
-}
-
-// Using MediatR in controller or minimal API
-public class UsersController : ControllerBase
-{
-    private readonly IMediator _mediator;
-    
-    public UsersController(IMediator mediator) => _mediator = mediator;
-    
-    [HttpGet("{id}")]
-    public async Task<ActionResult<User>> GetUser(int id)
-    {
-        var user = await _mediator.Send(new GetUserByIdQuery(id));
-        return user is null ? NotFound() : Ok(user);
-    }
-    
-    [HttpPost]
-    public async Task<ActionResult<User>> CreateUser(CreateUserCommand command)
-    {
-        var user = await _mediator.Send(command);
-        return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
-    }
-}
-```
 
 # Asynchronous Programming
 
 Asynchronous programming in C# allows you to write non-blocking code that can improve responsiveness and throughput, particularly in I/O-bound and network operations. Modern C# provides elegant syntax with async/await that makes asynchronous code almost as straightforward to write as synchronous code, while maintaining the performance benefits.
 
-## When to Use Asynchronous Programming
+## When to use asynchronous programming
 
-Understanding when to use async code is crucial:
-
-1. I/O-bound operations: Use async/await for operations that spend time waiting for external resources:
+Understanding when to use async code is crucial. Use async code for **I/O-bound operations**:
     - Network requests
     - Database operations
     - File system operations
     - Web API calls
     - User input
 
-2. CPU-bound operations: For computationally intensive work, use:
+Don't use it for **CPU-bound operations**. For computationally intensive work, use:
     - Task.Run to offload work to a background thread
     - Parallel processing APIs for data parallelism
 
 
->It is not recommended for:
-
-    - Simple, fast operations where async overhead exceeds benefits
-    - Synchronous CPU-bound work (unless you need to offload it)
-    - When synchronization complexity outweighs the benefits
-
-## Async and Await Basics
+## Async and await basics
 
 ```csharp
 // Async method declaration
@@ -2377,19 +1810,19 @@ public async void Button_Click(object sender, EventArgs e)
 }
 ```
 
-## Guidelines for Async Methods:
+## Guidelines for async methods:
 
-1. Naming Convention: Append "Async" to method names that return Task or Task<T>
-2. Return Types:
+1. **Naming convention**: Append "Async" to method names that return Task or Task<T>
+2. **Return types**:
     - Use Task<T> for methods that return a value
     - Use Task for methods that don't return a value
     - Avoid async void except for event handlers
-3. Async All the Way: Convert entire call chains to async to avoid blocking
-4. ConfigureAwait: Use ConfigureAwait(false) in library code to avoid forcing context
+3. **Async all the way**: Convert entire call chains to async to avoid blocking
+4. **ConfigureAwait**: Use ConfigureAwait(false) in library code to avoid forcing context
 
-## Task-based Asynchronous Pattern
+## Task-based asynchronous pattern
 
-The Task-based Asynchronous Pattern (TAP) is the recommended approach for asynchronous programming in C#. It uses `Task` and `Task<T>` to represent ongoing work and provides rich composition capabilities.
+The Task-based asynchronous pattern (TAP) is the recommended approach for asynchronous programming in C#. It uses `Task` and `Task<T>` to represent ongoing work and provides rich composition capabilities.
 
 ```csharp
 // Create and return a Task
@@ -2434,79 +1867,13 @@ public async Task<string> GetFastestResponseAsync()
 }
 ```
 
-## Exception Handling in Async Code
-
-```csharp
-public async Task ExceptionHandlingExampleAsync()
-{
-    try
-    {
-        // Multiple awaits in one try block
-        string data = await DownloadDataAsync("https://example.com/api/data");
-        int result = await ProcessDataAsync(data);
-        await SaveResultAsync(result);
-    }
-    catch (HttpRequestException ex)
-    {
-        // Handle network-related exceptions
-        Console.WriteLine($"Network error: {ex.Message}");
-    }
-    catch (JsonException ex)
-    {
-        // Handle JSON parsing exceptions
-        Console.WriteLine($"Invalid data format: {ex.Message}");
-    }
-    catch (Exception ex)
-    {
-        // Handle all other exceptions
-        Console.WriteLine($"Unexpected error: {ex.Message}");
-    }
-}
-
-// Aggregate exceptions with Task.WhenAll
-public async Task HandleMultipleExceptionsAsync()
-{
-    var tasks = new List<Task>();
-    
-    for (int i = 0; i < 5; i++)
-    {
-        int taskNumber = i;
-        tasks.Add(Task.Run(async () =>
-        {
-            if (taskNumber % 2 == 0)
-            {
-                await Task.Delay(100);
-                throw new Exception($"Task {taskNumber} failed");
-            }
-        }));
-    }
-    
-    try
-    {
-        await Task.WhenAll(tasks);
-    }
-    catch (Exception)
-    {
-        // Check for all exceptions
-        foreach (var task in tasks)
-        {
-            if (task.Exception != null)
-            {
-                Console.WriteLine(task.Exception.InnerException.Message);
-            }
-        }
-    }
-}
-```
 When to use different task composition methods:
-1. Task.WhenAll: Use when you need the results of all operations and they can run concurrently
-2. Task.WhenAny: Use for implementing timeouts, racing operations, or taking the first available result
-3. Task.Run: Use for CPU-bound work that needs to be offloaded from the current thread
-4. Task.Delay: Use for implementing timeouts or periodic operations in async methods
+1. **Task.WhenAll**: Use when you need the results of all operations and they can run concurrently
+2. **Task.WhenAny**: Use for implementing timeouts, racing operations, or taking the first available result
+3. **Task.Run**: Use for CPU-bound work that needs to be offloaded from the current thread
+4. **Task.Delay**: Use for implementing timeouts or periodic operations in async methods
 
-## Exception Handling in Async Code
-
-Exception handling in async code requires special consideration to ensure errors are properly caught and handled.
+## Exception handling in async code
 
 ```csharp
 public async Task ExceptionHandlingExampleAsync()
@@ -2571,7 +1938,7 @@ public async Task HandleMultipleExceptionsAsync()
 }
 ```
 
-## Async Exception Handling Best Practices:
+## Async exception handling best practices:
 
 1. Always handle exceptions in async methods, especially in async void methods
 2. Be aware that Task.WhenAll throws only the first exception; check all tasks for exceptions
@@ -2580,9 +1947,9 @@ public async Task HandleMultipleExceptionsAsync()
 5. Remember that exceptions in async methods are captured and placed on the returned Task
 
 
-## Cancellation in Async Operations
+## Cancellation in async operations
 
-Cancellation allows long-running operations to be stopped gracefully. The CancellationToken mechanism provides a standardized way to implement cancellation in async methods.
+Cancellation allows long-running operations to be stopped gracefully. The `CancellationToken` mechanism provides a standardized way to implement cancellation in async methods.
 
 ```csharp
 public async Task DemonstrateCancellationAsync()
@@ -2635,7 +2002,7 @@ public async Task<string> DownloadWithTimeoutAsync(string url, TimeSpan timeout)
 }
 ```
 
-## ValueTask and Async Streams (C# 8.0+)
+## ValueTask and async streams (C# 8.0+)
 
 `ValueTask` and async streams are newer features that enhance async programming in specific scenarios by improving performance and extending the asynchronous model to sequences.
 
@@ -2703,9 +2070,13 @@ public async Task ConsumeAsyncStreamAsync()
 
 <div id="code-organization"></div>
 
-# Performance Optimization
+# Performance optimization
 
-## High-Performance Techniques
+## High-performance techniques
+
+We can use memory-efficient operations using Span<T>, stack-based allocations, buffer pooling strategies, and specialized parsing methods. 
+
+These approaches reduce heap allocations, prevent memory fragmentation, and optimize resource usage—critical for high-throughput applications and systems with limited resources.
 
 ```csharp
 // Using Span<T> for memory-efficient operations
@@ -2771,7 +2142,11 @@ using var fileStream = new FileStream(
     useAsync: true);
 ```
 
-## Memory Management
+## Memory management
+
+We can use stack-based value types (structs) to avoid heap allocations, ref structs to enforce stack-only storage, and ref returns that allow direct memory manipulation without copying. 
+
+The example also shows record structs that combine immutability with value type performance benefits. 
 
 ```csharp
 // Value types vs reference types
@@ -2816,9 +2191,11 @@ found = 30; // Modifies the array element directly
 public readonly record struct UserId(Guid Value);
 ```
 
-# Code Organization
+# Code organization
 
-How you organize your C# code significantly impacts its readability, maintainability, and extensibility. Well-organized code follows consistent patterns, respects separation of concerns, and leverages language features to create clear boundaries between components. Modern C# includes numerous features that help enforce good code organization principles.
+How you organize your C# code significantly impacts its readability, maintainability, and extensibility. Well-organized code follows consistent patterns, respects separation of concerns, and leverages language features to create clear boundaries between components. 
+
+Modern C# includes numerous features that help enforce good code organization principles.
 
 ## Namespaces
 
@@ -2851,7 +2228,7 @@ public class Customer
 4. Avoid deeply nested namespaces (more than 3-4 levels)
 5. Don't put different functionality in the same namespace just because they're in the same assembly
 
-## Using Directives
+## Using directives
 
 Using directives specify which namespaces are referenced in your code, allowing you to use types from those namespaces without fully qualifying them. They improve code readability by reducing repetition.
 
@@ -2929,8 +2306,7 @@ file static class StringExtensions  // Only visible in this file
 }
 ```
 
-
-## Partial Classes
+## Partial classes
 
 Partial classes allow splitting a class, struct, or interface definition across multiple files. This can be useful for separating generated code from hand-written code or dividing large classes by functionality.
 
@@ -2969,7 +2345,7 @@ public partial class Customer
 }
 ```
 
-## Access Modifiers
+## Access modifiers
 
 Access modifiers control the visibility and accessibility of types and type members. Properly applied access modifiers create clear boundaries and enforce encapsulation.
 
@@ -2977,16 +2353,16 @@ Access modifiers control the visibility and accessibility of types and type memb
 // Access modifiers
 public class AccessModifierDemo
 {
-    public int PublicField;           // Accessible from anywhere
-    private int _privateField;        // Accessible only within the class
-    protected int ProtectedField;     // Accessible within the class and derived classes
-    internal int InternalField;       // Accessible within the same assembly
+    public int PublicField;                        // Accessible from anywhere
+    private int _privateField;                     // Accessible only within the class
+    protected int ProtectedField;                  // Accessible within the class and derived classes
+    internal int InternalField;                    // Accessible within the same assembly
     protected internal int ProtectedInternalField; // Accessible within the same assembly or derived classes
     private protected int PrivateProtectedField;   // Accessible within the same assembly from derived classes
 }
 ```
 
-### Access Modifier guidelines:
+### Access modifier guidelines:
 
 1. **public**: Use for types and members that form your public API
 2. **internal**: Use for types and members that should be available within your assembly but not externally
@@ -2995,7 +2371,7 @@ public class AccessModifierDemo
 5. **protected internal**: Use when both derived classes and code within the assembly need access
 6. **private protected**: Use when derived classes within the same assembly (but not external ones) need access
 
-## Extension Methods
+## Extension methods
 
 Extension methods allow you to add methods to existing types without modifying the original type. They're particularly useful for extending types from libraries you can't modify directly or for adding utility methods to common types.
 
@@ -3022,7 +2398,7 @@ bool isEmpty = text.IsNullOrEmpty(); // false
 string truncated = text.Truncate(5); // "Hello"
 ```
 
-## Properties and Indexers
+## Properties and indexers
 
 Properties provide a way to expose fields while adding validation, computed values, or extra logic during access. They're a fundamental part of C# that enables proper encapsulation in object-oriented design.
 
@@ -3073,15 +2449,13 @@ public class PropertyDemo
 }
 ```
 
-**Additional Resources:**
-- [C# Coding Conventions (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/coding-conventions)
-- [Clean Code: A Handbook of Agile Software Craftsmanship (Book by Robert C. Martin)](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882)
+**Additional resources:**
+- [C# coding conventions (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/coding-conventions)
 - [File-scoped namespaces (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-10.0/file-scoped-namespaces)
-- [Access Modifiers (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/access-modifiers)
+- [Access modifiers (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/access-modifiers)
 - [Properties (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/properties)
 
 <div id="end-of-document"></div>
-
 
 ## Wrap Up
 
