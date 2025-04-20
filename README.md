@@ -85,7 +85,6 @@ If you like or are using this project to learn or start your solution, please gi
   - [File-scoped types](#file-scoped-types-c-11)
   - [Partial classes](#partial-classes)
   - [Access modifiers](#access-modifiers)
-  - [Extension methods](#extension-methods)
   - [Properties and indexers](#properties-and-indexers)
 
 <div id="comments"></div>
@@ -2244,33 +2243,6 @@ public class AccessModifierDemo
 4. **protected**: Use for members that should be accessible to derived classes for customization
 5. **protected internal**: Use when both derived classes and code within the assembly need access
 6. **private protected**: Use when derived classes within the same assembly (but not external ones) need access
-
-## Extension methods
-
-Extension methods allow you to add methods to existing types without modifying the original type. They're particularly useful for extending types from libraries you can't modify directly or for adding utility methods to common types.
-
-```csharp
-// Extension methods must be defined in a static class
-public static class StringExtensions
-{
-    // Extension method for String type
-    public static bool IsNullOrEmpty(this string value)
-    {
-        return string.IsNullOrEmpty(value);
-    }
-    
-    public static string Truncate(this string value, int maxLength)
-    {
-        if (string.IsNullOrEmpty(value)) return value;
-        return value.Length <= maxLength ? value : value.Substring(0, maxLength);
-    }
-}
-
-// Usage
-string text = "Hello, World!";
-bool isEmpty = text.IsNullOrEmpty(); // false
-string truncated = text.Truncate(5); // "Hello"
-```
 
 ## Properties and indexers
 
