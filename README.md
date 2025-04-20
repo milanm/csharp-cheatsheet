@@ -1758,16 +1758,15 @@ Asynchronous programming in C# allows you to write non-blocking code that can im
 ## When to use asynchronous programming
 
 Understanding when to use async code is crucial. Use async code for **I/O-bound operations**:
-    - Network requests
-    - Database operations
-    - File system operations
-    - Web API calls
-    - User input
+- Network requests
+- Database operations
+- File system operations
+- Web API calls
+- User input
 
 Don't use it for **CPU-bound operations**. For computationally intensive work, use:
-    - Task.Run to offload work to a background thread
-    - Parallel processing APIs for data parallelism
-
+- `Task.Run` to offload work to a background thread
+- Parallel processing APIs for data parallelism
 
 ## Async and await basics
 
