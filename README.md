@@ -4,7 +4,7 @@
 
 This comprehensive C# cheat sheet serves as a quick reference guide for C# developers at all skill levels. It covers the core language features, modern patterns, and best practices as of 2025. The cheat sheet is organized from fundamental concepts to more advanced topics, making it useful for both learning and reference purposes.
 
-C# has evolved significantly since its inception, with regular updates introducing powerful new features while maintaining backward compatibility. This guide incorporates the latest language enhancements through C# 13 and beyond, modern architectural patterns, performance optimizations, and development approaches that have become standard in the .NET ecosystem.
+C# has evolved significantly since its inception, with regular updates introducing powerful new features while maintaining backward compatibility. This guide incorporates the latest language enhancements through C# 12 and beyond, modern architectural patterns, performance optimizations, and development approaches that have become standard in the .NET ecosystem.
 
 Whether you're building web applications, microservices, desktop software, mobile apps, or games, you'll find relevant syntax examples and patterns to accelerate your development process. Feel free to bookmark this page and refer to it whenever you need to refresh your knowledge of C# language features or modern development techniques.
 
@@ -109,7 +109,7 @@ If you like or are using this project to learn or start your solution, please gi
 
 # Comments
 
-C# supports three types of comments: single-line, multi-line, and XML documentation comments.
+Comments in C# provide ways to document your code, explain complex logic, and temporarily disable code during development. C# supports three types of comments: single-line, multi-line, and XML documentation comments. Good commenting practices are essential for code maintainability, especially in team environments.
 
 ```csharp
 // This is a single-line comment
@@ -136,11 +136,15 @@ XML documentation comments can include various tags to document parameters, retu
 public int Add(int a, int b) => a + b;
 ```
 
+**Additional Resources:**
+- [Microsoft Docs: XML Documentation Comments](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/)
+- [C# Coding Conventions](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/coding-conventions)
+
 <div id="strings"></div>
 
 # Strings
 
-In C#, strings are immutable sequences of Unicode characters represented by the `string` type, which is an alias for `System.String`.
+Strings in C# are immutable sequences of Unicode characters represented by the `string` type (an alias for `System.String`). C# offers a rich set of string manipulation features, from basic concatenation to advanced interpolation and raw string literals. The language has evolved significantly to make string handling more intuitive and efficient.
 
 ```csharp
 // Basic string creation
@@ -172,7 +176,7 @@ string json = """
 
 // Raw string interpolation (C# 11+)
 string name = "Jane";
-string rawInterpolated = $$"""
+string rawInterpolated = $"""
 {
     "name": "{{name}}",
     "created": "{{DateTime.Now}}"
@@ -207,11 +211,17 @@ for (int i = 0; i < 100; i++)
 string result = sb.ToString();
 ```
 
+**Additional Resources:**
+- [String Class (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/api/system.string)
+- [String Interpolation (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/tokens/interpolated)
+- [Raw String Literals (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-11.0/raw-string-literal)
+- [String Performance Best Practices](https://learn.microsoft.com/en-us/dotnet/standard/base-types/best-practices-strings)
+
 <div id="basic-types-and-literals"></div>
 
 # Basic Types and Literals
 
-C# is a strongly-typed language with a rich type system. Here are the basic types and literals:
+C# is a strongly-typed language with a comprehensive type system that forms the foundation of all C# programs. Understanding these basic types is essential for writing efficient and type-safe code. C# types are categorized as value types (stored on the stack) and reference types (stored on the heap), each with different memory and performance characteristics.
 
 ```csharp
 // Integer types
@@ -297,11 +307,18 @@ public string Id { get; init; } = Guid.NewGuid().ToString();
 public required string Name { get; init; }
 ```
 
+**Additional Resources:**
+- [Built-in Types (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/built-in-types)
+- [Value Types (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-types)
+- [Reference Types (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/reference-types)
+- [Constants (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/const)
+- [DateOnly and TimeOnly Types (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-6#dateonly-and-timeonly)
+
 <div id="methods-and-functions"></div>
 
 # Methods and Functions
 
-Methods in C# are defined within classes or structs. C# supports various ways to define methods.
+Methods are the fundamental building blocks of C# programs that encapsulate behavior and logic. They provide a way to organize code into reusable units, improving maintainability and readability. C# offers various ways to define methods with different parameter types, return values, and syntax options to accommodate different programming styles and needs.
 
 ## Basic Method Syntax
 
@@ -327,6 +344,8 @@ public void PrintMessage(string message)
 
 ## Expression-bodied Members (C# 6.0+)
 
+Expression-bodied members provide a concise syntax for methods, properties, and other members that can be represented by a single expression.
+
 ```csharp
 // Expression-bodied method (one-line methods)
 public int Multiply(int a, int b) => a * b;
@@ -336,6 +355,8 @@ public string FullName => $"{FirstName} {LastName}";
 ```
 
 ## Method Parameters
+
+C# provides flexible parameter passing options to handle different programming scenarios.
 
 ```csharp
 // Optional parameters
@@ -385,6 +406,8 @@ public int Sum(params int[] numbers)
 
 ## Local Functions (C# 7.0+)
 
+Local functions allow you to define methods inside other methods, encapsulating helper logic that is only relevant to the containing method.
+
 ```csharp
 public int Factorial(int n)
 {
@@ -400,6 +423,8 @@ public int Factorial(int n)
 ```
 
 ## Extension Methods
+
+Extension methods allow you to add methods to existing types without modifying the original type, making them particularly useful for extending types you don't control.
 
 ```csharp
 // Must be defined in a non-nested, non-generic static class
@@ -426,6 +451,8 @@ string truncated = text.Truncate(5); // "Hello"
 ```
 
 ## Lambda Expressions
+
+Lambda expressions provide a concise way to create anonymous functions, especially useful for LINQ queries, event handlers, and functional programming patterns.
 
 ```csharp
 // Func delegate (takes parameters, returns a value)
@@ -454,6 +481,8 @@ Func<int, int> factorial = n =>
 
 ## Method Overloading
 
+Method overloading allows multiple methods with the same name but different parameter lists, providing flexibility in how a method can be called.
+
 ```csharp
 // Method overloading (same name, different parameters)
 public void Display(int value)
@@ -472,15 +501,22 @@ public void Display(int value, string format)
 }
 ```
 
+**Additional Resources:**
+- [Methods (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/methods)
+- [Expression-bodied Members (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/expression-bodied-members)
+- [Method Parameters (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/method-parameters)
+- [Extension Methods (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/extension-methods)
+- [Lambda Expressions (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/lambda-expressions)
+
 <div id="collections"></div>
 
 # Collections
 
-C# provides a rich set of collection types for different scenarios.
+Collections in C# provide powerful ways to store, manage, and manipulate groups of related objects. The .NET framework offers various collection types optimized for different scenarios, from simple arrays to complex specialized collections. Choosing the right collection type is essential for writing efficient and maintainable code.
 
 ## Collection Expressions (C# 12+)
 
-Collection expressions are a concise way to initialize collections.
+Collection expressions are a concise way to initialize collections, introduced in C# 12. They provide a unified syntax for creating and initializing different collection types.
 
 ```csharp
 // Creating collections with the new collection expressions syntax
@@ -503,7 +539,7 @@ bool IsValidPoint(int[] point) => point is [var x, var y] && x >= 0 && y >= 0;
 
 ## Arrays
 
-Arrays are fixed-size collections of elements of the same type.
+Arrays are fixed-size collections of elements of the same type. They provide efficient random access but have a predetermined size that cannot change after creation.
 
 ```csharp
 // Declaration and initialization
@@ -541,7 +577,7 @@ bool exists = Array.Exists(numbers, n => n > 10); // Check if condition exists
 
 ## Lists
 
-Lists are dynamic arrays that can grow or shrink in size.
+Lists are dynamic arrays that can grow or shrink in size. They provide flexibility and are generally the go-to collection type for most scenarios when you need a sequence of elements.
 
 ```csharp
 using System.Collections.Generic;
@@ -579,7 +615,7 @@ numbers.ForEach(n => Console.WriteLine(n)); // Perform action on each element
 
 ## Dictionary
 
-Dictionaries store key-value pairs for fast lookups by key.
+Dictionaries store key-value pairs for fast lookups by key. They are essential when you need to quickly access values based on unique identifiers.
 
 ```csharp
 using System.Collections.Generic;
@@ -623,7 +659,7 @@ foreach (var (name, age) in ages)
 
 ## HashSet
 
-HashSets store unique elements with fast lookup, insertion, and deletion.
+HashSets store unique elements with fast lookup, insertion, and deletion. They're ideal for maintaining collections of unique items or performing set operations.
 
 ```csharp
 using System.Collections.Generic;
@@ -658,7 +694,7 @@ bool isSuperset = setA.IsSupersetOf(setB);
 
 ## Queue and Stack
 
-Queues (FIFO - first in, first out) and Stacks (LIFO - last in, first out).
+Queues (FIFO - first in, first out) and Stacks (LIFO - last in, first out) are specialized collections that support specific access patterns common in many algorithms and data processing scenarios.
 
 ```csharp
 using System.Collections.Generic;
@@ -688,7 +724,7 @@ bool stackContains = stack.Contains(2);
 
 ## LINQ (Language Integrated Query)
 
-LINQ provides powerful query capabilities for collections.
+LINQ provides powerful query capabilities for collections, making it easier to filter, transform, and aggregate data. It brings database-like query operations to in-memory collections.
 
 ```csharp
 using System.Linq;
@@ -745,6 +781,13 @@ var queryResult = from n in numbers
                   orderby n descending
                   select n * 2;
 ```
+
+**Additional Resources:**
+- [Collections Overview (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/collections/)
+- [Collection Expressions (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/collection-expressions)
+- [LINQ (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/)
+- [Choosing a Collection Type (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/collections/selecting-a-collection-class)
+- [System.Collections.Generic Namespace (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic)
 
 <div id="data-types"></div>
 
@@ -2664,6 +2707,8 @@ public class PropertyDemo
     }
 }
 ```
+
+
 ## Wrap Up
 
 If you think the cheatsheet can be improved, please open a PR with any updates and submit any issues. Also, I will continue to improve this, so you should star this repository, too.
