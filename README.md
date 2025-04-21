@@ -1203,7 +1203,7 @@ When designing class hierarchies, consider these guidelines:
 - Use sealed classes for security-sensitive code or to prevent unintended inheritance
 - Implement interfaces for defining capabilities that can be shared across unrelated classes
 
-**Additional Resources:**
+**Additional resources:**
 
 - [Classes and objects (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/object-oriented/classes-and-objects)
 - [Inheritance (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/object-oriented/inheritance)
@@ -1486,7 +1486,7 @@ var queryResult = from n in numbers
                   select n * 2;
 ```
 
-**Additional Resources:**
+**Additional resources:**
 
 - [Collections overview (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/collections/)
 - [Collection expressions (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/collection-expressions)
