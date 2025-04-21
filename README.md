@@ -535,7 +535,7 @@ button.Clicked += (sender, args) => Console.WriteLine("Clicked!");
 
 **Additional resources**:
 
-- [Delegates (Microsoft Docs)(https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/)
+- [Delegates (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/)
 - [Events (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/events-overview)
 
 <div id="data-types"></div>
@@ -921,7 +921,7 @@ public class EmployeeRepository<T> where T : Employee, new()
 {
     public T Create() => new T();
 }
-```csharp
+```
 
 **Additional resources**:
 
