@@ -887,7 +887,7 @@ nullableString ??= "Default";
 
 Generics let you define type-safe, reusable classes, methods, and interfaces. They improve code reuse, type safety, and performance by avoiding boxing/unboxing overhead.
 
-Generic class:
+**Generic class**:
 
 ```csharp
 public class Repository<T>
@@ -904,7 +904,7 @@ intRepo.Add(42);
 int number = intRepo.Get(0);
 ```
 
-Generic methods:
+**Generic methods**:
 
 ```csharp
 public T Echo<T>(T input) => input;
@@ -914,7 +914,7 @@ string message = Echo("Hello");
 int number = Echo(123);
 ```
 
-Constraints (limit generic types):
+**Constraints (limit generic types)**:
 
 ```csharp
 public class EmployeeRepository<T> where T : Employee, new()
