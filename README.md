@@ -77,7 +77,7 @@ If you like or are using this project to learn or start your solution, please gi
   - [Try-Catch-Finally](#try-catch-finally)
   - [Throwing exceptions](#throwing-exceptions)
   - [Custom exceptions](#custom-exceptions)
-  - [Using statement](#using-statement)
+- [Using statement](#using-statement)
 - [Asynchronous programming](#asynchronous-programming)
   - [Async and await basics](#async-and-await-basics)
   - [Task-based asynchronous pattern](#task-based-asynchronous-pattern)
@@ -1799,8 +1799,27 @@ void ProcessCustomer(int customerId)
     // Process customer...
 }
 ```
+## Performance considerations
 
-## Using statement
+Exception handling has performance implications that should be considered in your design:
+
+1. The `try` block itself has minimal overhead when no exceptions occur
+2. Throwing and catching exceptions is relatively expensive and should not be used for normal control flow
+3. Use patterns like `TryParse` and null checking to avoid throwing exceptions in expected scenarios
+4. Reserve exceptions for truly exceptional conditions that shouldn't happen in normal operation
+5. Consider using status return codes or `Result<T>` pattern for expected error conditions in performance-critical code
+
+**Additional resources:**
+
+- [Exception handling (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/exceptions/)
+- [Best practices for Exceptions (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/exceptions/best-practices-for-exceptions)
+- [Creating and throwing Exceptions (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/exceptions/how-to-create-user-defined-exceptions)
+- [IDisposable pattern (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-dispose)
+- [Exception handling in async code (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/exception-handling-task-asynchronous-pattern)
+
+<div id="using-statement"></div>
+
+# Using statement
 
 The `using` statement ensures that disposable resources are properly cleaned up, even if exceptions occur. It's an essential pattern for working with resources like files, network connections, and database connections that need to be explicitly released.
 
@@ -1834,24 +1853,6 @@ using var binaryWriter = new BinaryWriter(fileStream);
 binaryWriter.Write(42);
 // Both binaryWriter and fileStream are disposed at end of scope
 ```
-
-## Performance considerations
-
-Exception handling has performance implications that should be considered in your design:
-
-1. The `try` block itself has minimal overhead when no exceptions occur
-2. Throwing and catching exceptions is relatively expensive and should not be used for normal control flow
-3. Use patterns like `TryParse` and null checking to avoid throwing exceptions in expected scenarios
-4. Reserve exceptions for truly exceptional conditions that shouldn't happen in normal operation
-5. Consider using status return codes or `Result<T>` pattern for expected error conditions in performance-critical code
-
-**Additional resources:**
-
-- [Exception handling (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/exceptions/)
-- [Best practices for Exceptions (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/exceptions/best-practices-for-exceptions)
-- [Creating and throwing Exceptions (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/exceptions/how-to-create-user-defined-exceptions)
-- [IDisposable pattern (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-dispose)
-- [Exception handling in async code (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/exception-handling-task-asynchronous-pattern)
 
 <div id="asynchronous-programming"></div>
 
