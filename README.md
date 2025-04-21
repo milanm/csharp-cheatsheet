@@ -566,13 +566,14 @@ public void AddItem(string item)
     }
 }
 
-// Best practices for locks:
-// 1. Use a private object for locking
-// 2. Keep the locked section as small as possible
-// 3. Avoid locking on 'this' or public objects
-// 4. Don't execute long-running or blocking operations inside a lock
-// 5. Consider using higher-level synchronization primitives for complex scenarios
 ```
+
+**Best practices for locks:**
+1. Use a private object for locking
+2. Keep the locked section as small as possible
+3. Avoid locking on 'this' or public objects
+4. Don't execute long-running or blocking operations inside a lock
+5. Consider using higher-level synchronization primitives for complex scenarios
 
 ## Using statement
 
