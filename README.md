@@ -36,7 +36,6 @@ If you like or are using this project to learn or start your solution, please gi
   - [Local functions](#local-functions-c-70)
   - [Extension methods](#extension-methods)
   - [Lambda expressions](#lambda-expressions)
-  - [Default parameters in lambdas](#default-parameters-in-lambdas-c-12)
   - [Method overloading](#method-overloading)
 - [Delegates and events](#delegates-and-events)
 - [Data types](#data-types)
