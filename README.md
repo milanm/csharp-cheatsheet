@@ -12,7 +12,7 @@ This guide incorporates the latest language enhancements **through C# 13 and be
 
 🔖 Feel free to **bookmark this page** and refer to it whenever you need to refresh your knowledge of C# language features or modern development techniques.
 
-The image below show an overview of the C# language features and concepts covered in this cheat sheet:
+The image below show an **overview of the C# language features and concepts** covered in this cheat sheet:
 
 ![C# Mind map](csharp-mindmap.png)
 
@@ -315,10 +315,6 @@ public required string Name { get; init; }
 - [DateOnly and timeOnly types (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-6#dateonly-and-timeonly)
 
 <div id="statements"></div>
-
-# Statements
-
-You're right - we should add a comprehensive section on statements to the C# cheat sheet. Let me create that section for you:
 
 # Statements
 
