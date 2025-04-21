@@ -60,7 +60,7 @@ If you like or are using this project to learn or start your solution, please gi
   - [Generic classes](#generic-classes) 
   - [Generic methods](#generic-methods)
   - [Constraints](#constraints)  
-- [Classes and inheritance](#classes-and-inheritance)
+- [Classes](#classes-and-inheritance)
   - [Constructors and initialization](#constructors-and-initialization)
   - [Primary constructors](#primary-constructors-c-12)
   - [Inheritance](#inheritance)
@@ -1357,7 +1357,7 @@ public class EmployeeRepository<T> where T : Employee, new()
 
 <div id="classes-and-inheritance"></div>
 
-# Classes and Inheritance
+# Classes 
 
 **Classes** are the foundation of object-oriented programming in C#, serving as blueprints for creating objects that encapsulate data and behavior. 
 
@@ -1917,6 +1917,8 @@ C# supports various pattern matching techniques for more expressive conditional 
 
 ## Type patterns
 
+**Type patterns** allow you to check the type of an object and cast it in a single operation. This is particularly useful in `is` expressions and switch statements.
+
 ```csharp
 // Type pattern - check if object is of a specific type
 object value = "Hello";
@@ -1940,6 +1942,8 @@ string GetDisplayName(object item) => item switch
 ```
 
 ## Property patterns
+
+**Property patterns** allow you to match properties of an object directly in a pattern. This is useful for filtering or extracting data from complex objects.
 
 ```csharp
 // Property pattern to match object properties
@@ -1966,6 +1970,8 @@ if (order is { Customer: { Name: "Alice" } })
 
 ## Tuple patterns
 
+**Tuple patterns** allow you to match multiple values at once, making it easy to work with data structures that contain multiple related values.
+
 ```csharp
 // Tuple pattern
 (int x, int y) = (5, 10);
@@ -1983,6 +1989,8 @@ string GetQuadrant(int x, int y) => (x, y) switch
 ```
 
 ## Logical patterns
+
+**Logical patterns** allow you to combine multiple conditions using logical operators like `and`, `or`, and `not`. This is useful for creating complex matching conditions.
 
 ```csharp
 // 'and', 'or', and 'not' patterns (C# 9.0+)
@@ -2004,6 +2012,8 @@ string CheckValue(int value) => value switch
 
 ## List patterns (C# 11.0+)
 
+**List patterns** allow you to match against the structure of collections, making it easier to work with arrays and lists.
+
 ```csharp
 // List pattern in C# 11
 var numbers = new[] { 1, 2, 3, 4 };
@@ -2021,6 +2031,8 @@ string DescribeArray(int[] arr) => arr switch
 ```
 
 ## Discard pattern
+
+**Discard patterns (underscore `_`)** allow you to ignore specific values in a pattern match. This is useful when you only care about certain values and want to ignore the rest.
 
 ```csharp
 // Discard pattern (underscore) to ignore values
