@@ -37,6 +37,7 @@ If you like or are using this project to learn or start your solution, please gi
   - [Extension methods](#extension-methods)
   - [Lambda expressions](#lambda-expressions)
   - [Method overloading](#method-overloading)
+- [Delegates and events](#delegates-and-events)
 - [Data types](#data-types)
   - [Classes](#classes)
   - [Structs](#structs)
@@ -46,6 +47,10 @@ If you like or are using this project to learn or start your solution, please gi
   - [Enums](#enums)
   - [Tuples](#tuples)
   - [Nullable types](#nullable-types)
+- [Generics](#generics)
+  - [Generic classes](#generic-classes) 
+  - [Generic methods](#generic-methods)
+  - [Constraints](#constraints)  
 - [Classes and inheritance](#classes-and-inheritance)
   - [Primary constructors](#primary-constructors-c-12)
   - [Inheritance](#inheritance)
@@ -494,6 +499,45 @@ public void Display(int value, string format)
 - [Extension methods (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/extension-methods)
 - [Lambda expressions (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/lambda-expressions)
 
+<div id="delegates-and-events"></div>
+
+# Delegates and events
+
+Delegates are type-safe pointers to methods, enabling flexible method invocation. Events are specialized delegates used for implementing the observer pattern (publisher/subscriber).
+
+```csharp
+public delegate int Operation(int x, int y);
+
+public int Add(int a, int b) => a + b;
+public int Multiply(int a, int b) => a * b;
+
+// Usage
+Operation op = Add;
+int result = op(3, 4); // 7
+op += Multiply; // Multicast delegate
+```
+
+Events are built on delegates and provide a way for classes to notify subscribers when something happens.
+
+```csharp:
+public class Button
+{
+    public event EventHandler Clicked;
+
+    protected virtual void OnClicked() =>
+        Clicked?.Invoke(this, EventArgs.Empty);
+}
+
+// Usage
+var button = new Button();
+button.Clicked += (sender, args) => Console.WriteLine("Clicked!");
+```
+
+**Additional resources**:
+
+- [Delegates (Microsoft Docs)(https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/)
+- [Events (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/events-overview)
+
 <div id="data-types"></div>
 
 # Data types
@@ -836,6 +880,52 @@ int? length = nullableString?.Length; // null if nullableString is null
 // Null-coalescing assignment (C# 8.0+)
 nullableString ??= "Default";
 ```
+
+<div id="generics"></div>
+
+# Generics
+
+Generics let you define type-safe, reusable classes, methods, and interfaces. They improve code reuse, type safety, and performance by avoiding boxing/unboxing overhead.
+
+Generic class:
+
+```csharp
+public class Repository<T>
+{
+    private readonly List<T> _items = new();
+
+    public void Add(T item) => _items.Add(item);
+    public T Get(int index) => _items[index];
+}
+
+// Usage
+var intRepo = new Repository<int>();
+intRepo.Add(42);
+int number = intRepo.Get(0);
+```
+
+Generic methods:
+
+```csharp
+public T Echo<T>(T input) => input;
+
+// Usage
+string message = Echo("Hello");
+int number = Echo(123);
+```
+
+Constraints (limit generic types):
+
+```csharp
+public class EmployeeRepository<T> where T : Employee, new()
+{
+    public T Create() => new T();
+}
+```csharp
+
+**Additional resources**:
+
+- [Generics (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/generics)
 
 <div id="classes-and-inheritance"></div>
 
