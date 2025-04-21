@@ -36,6 +36,7 @@ If you like or are using this project to learn or start your solution, please gi
   - [Local functions](#local-functions-c-70)
   - [Extension methods](#extension-methods)
   - [Lambda expressions](#lambda-expressions)
+  - [Default parameters in lambdas](#default-parameters-in-lambdas-c-12)
   - [Method overloading](#method-overloading)
 - [Delegates and events](#delegates-and-events)
 - [Data types](#data-types)
@@ -52,11 +53,11 @@ If you like or are using this project to learn or start your solution, please gi
   - [Generic methods](#generic-methods)
   - [Constraints](#constraints)  
 - [Classes and inheritance](#classes-and-inheritance)
+  - [Constructors and initialization](#constructors-and-initialization)
   - [Primary constructors](#primary-constructors-c-12)
   - [Inheritance](#inheritance)
   - [Abstract classes](#abstract-classes)
   - [Sealed classes and members](#sealed-classes-and-members)
-  - [Constructors and initialization](#constructors-and-initialization)
   - [Polymorphism](#polymorphism)
 - [Collections](#collections)
   - [Collection expressions](#collection-expressions-c-12)
@@ -468,6 +469,15 @@ Func<int, int> factorial = n =>
     }
     return result;
 };
+```
+
+### Default parameters in lambdas (C# 12)
+
+Lambdas can now have default values for parameters:
+
+```csharp
+Func<int, int, int> add = (x, y = 10) => x + y;
+int result = add(5); // 15
 ```
 
 ## Method overloading
@@ -988,7 +998,7 @@ public class Employee : Person
 }
 ```
 
-## Primary Constructors (C# 12+)
+## Primary constructors (C# 12+)
 
 Primary constructors are a new feature in C# 12 that simplify class initialization by allowing constructor parameters to be defined directly in the class declaration. This reduces boilerplate code and makes the relationship between constructor parameters and class members more explicit.
 
