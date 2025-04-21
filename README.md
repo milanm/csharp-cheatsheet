@@ -123,7 +123,8 @@ XML documentation comments can include various tags to document parameters, retu
 public int Add(int a, int b) => a + b;
 ```
 
-**Additional Resources:**
+**Additional resources:**
+
 - [Microsoft Docs: XML Documentation Comments](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/)
 - [C# Coding Conventions](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/coding-conventions)
 
@@ -198,7 +199,8 @@ for (int i = 0; i < 100; i++)
 string result = sb.ToString();
 ```
 
-**Additional Resources:**
+**Additional resources:**
+
 - [String class (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/api/system.string)
 - [String interpolation (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/tokens/interpolated)
 - [Raw String literals (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-11.0/raw-string-literal)
@@ -296,7 +298,8 @@ public string Id { get; init; } = Guid.NewGuid().ToString();
 public required string Name { get; init; }
 ```
 
-**Additional Resources:**
+**Additional resources:**
+
 - [Built-in types (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/built-in-types)
 - [Value types (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-types)
 - [Reference types (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/reference-types)
@@ -502,6 +505,7 @@ public void Display(int value, string format)
 ```
 
 **Additional resources:**
+
 - [Methods (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/methods)
 - [Expression-bodied members (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/expression-bodied-members)
 - [Method parameters (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/method-parameters)
@@ -1200,6 +1204,7 @@ When designing class hierarchies, consider these guidelines:
 - Implement interfaces for defining capabilities that can be shared across unrelated classes
 
 **Additional Resources:**
+
 - [Classes and objects (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/object-oriented/classes-and-objects)
 - [Inheritance (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/object-oriented/inheritance)
 - [Abstract classes and methods (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/abstract)
@@ -1482,6 +1487,7 @@ var queryResult = from n in numbers
 ```
 
 **Additional Resources:**
+
 - [Collections overview (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/collections/)
 - [Collection expressions (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/collection-expressions)
 - [LINQ (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/)
@@ -1840,6 +1846,7 @@ Exception handling has performance implications that should be considered in you
 5. Consider using status return codes or `Result<T>` pattern for expected error conditions in performance-critical code
 
 **Additional resources:**
+
 - [Exception handling (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/exceptions/)
 - [Best practices for Exceptions (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/exceptions/best-practices-for-exceptions)
 - [Creating and throwing Exceptions (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/exceptions/how-to-create-user-defined-exceptions)
@@ -2397,6 +2404,7 @@ public class PropertyDemo
 ```
 
 **Additional resources:**
+
 - [C# coding conventions (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/coding-conventions)
 - [File-scoped namespaces (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-10.0/file-scoped-namespaces)
 - [Access modifiers (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/access-modifiers)
