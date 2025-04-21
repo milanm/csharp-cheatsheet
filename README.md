@@ -12,9 +12,11 @@ This guide incorporates the latest language enhancements **through C# 13 and be
 
 🔖 Feel free to **bookmark this page** and refer to it whenever you need to refresh your knowledge of C# language features or modern development techniques.
 
+The image below show an overview of the C# language features and concepts covered in this cheat sheet:
+
 ![C# Mind map](csharp-mindmap.png)
 
-## Support My Work
+## Support my work
 
 If you find this repository helpful, consider supporting me on Patreon:
 
@@ -24,11 +26,18 @@ If you find this repository helpful, consider supporting me on Patreon:
 
 If you like or are using this project to learn or start your solution, please give it a star. Thanks!
 
-## Table of Contents
+## Table of contents
 
 - [Comments](#comments)
 - [Strings](#strings)
 - [Basic types and literals](#basic-types-and-literals)
+- [Statements](#statements)
+  - [Control flow](#control-flow)
+  - [Loops](#loops)
+  - [Lock statement](#lock-statement)
+  - [Using statement](#using-statement)
+  - [Unsafe code](#unsafe-code)
+  - [Yield statement](#yield-statement)
 - [Methods and functions](#methods-and-functions)
   - [Basic method syntax](#basic-method-syntax)
   - [Expression-bodied members](#expression-bodied-members-c-60)
