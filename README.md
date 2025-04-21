@@ -516,7 +516,7 @@ public void Display(int value, string format)
 
 # Delegates and events
 
-Delegates are type-safe pointers to methods, enabling flexible method invocation. They are often used for callbacks, event handling, and implementing the observer pattern. Delegates can point to static or instance methods and can be multicast (pointing to multiple methods).
+**Delegates** are type-safe pointers to methods, enabling flexible method invocation. They are often used for callbacks, event handling, and implementing the observer pattern. Delegates can point to static or instance methods and can be multicast (pointing to multiple methods).
 
 ```csharp
 public delegate int Operation(int x, int y);
@@ -530,7 +530,7 @@ int result = op(3, 4); // 7
 op += Multiply; // Multicast delegate
 ```
 
-Events are built on delegates and provide a way for classes to notify subscribers when something happens. Events are typically used in GUI applications and other scenarios where you want to decouple the event source from the event handler.
+**Events** are built on delegates and provide a way for classes to notify subscribers when something happens. Events are typically used in GUI applications and other scenarios where you want to decouple the event source from the event handler.
 
 ```csharp:
 public class Button
