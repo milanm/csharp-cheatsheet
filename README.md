@@ -77,7 +77,6 @@ If you like or are using this project to learn or start your solution, please gi
   - [Try-Catch-Finally](#try-catch-finally)
   - [Throwing exceptions](#throwing-exceptions)
   - [Custom exceptions](#custom-exceptions)
-- [Using statement](#using-statement)
 - [Asynchronous programming](#asynchronous-programming)
   - [Async and await basics](#async-and-await-basics)
   - [Task-based asynchronous pattern](#task-based-asynchronous-pattern)
@@ -305,6 +304,416 @@ public required string Name { get; init; }
 - [Reference types (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/reference-types)
 - [Constants (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/const)
 - [DateOnly and timeOnly types (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-6#dateonly-and-timeonly)
+
+<div id="statements"></div>
+
+# Statements
+
+You're right - we should add a comprehensive section on statements to the C# cheat sheet. Let me create that section for you:
+
+# Statements
+
+Statements are the building blocks of C# code execution, controlling the flow of your program and dictating how operations are carried out. Understanding these core language constructs is essential for effective C# programming.
+
+## Control flow
+
+Control flow statements allow you to make decisions and execute different code paths based on conditions.
+
+### If-Else statements
+
+If-else statements execute different code blocks based on boolean conditions. They form the foundation of decision-making in C#.
+
+```csharp
+// Basic if statement
+if (condition)
+{
+    // Code executed if condition is true
+}
+
+// If-else
+if (temperature > 30)
+{
+    Console.WriteLine("It's hot outside");
+}
+else
+{
+    Console.WriteLine("It's not too hot");
+}
+
+// If-else if-else chain
+if (temperature > 30)
+{
+    Console.WriteLine("It's hot outside");
+}
+else if (temperature > 20)
+{
+    Console.WriteLine("It's warm outside");
+}
+else if (temperature > 10)
+{
+    Console.WriteLine("It's cool outside");
+}
+else
+{
+    Console.WriteLine("It's cold outside");
+}
+
+// Conditional (ternary) operator - shorthand for simple if-else
+string message = age >= 18 ? "Adult" : "Minor";
+
+// Null-coalescing operator (??) - returns the left operand if it's not null, otherwise the right
+string name = userName ?? "Anonymous";
+
+// Null-conditional operator (?.) - safely accesses members of potentially null objects
+int? length = customer?.Name?.Length;
+
+// Null-coalescing assignment (??=) - C# 8.0+
+// Assigns the right operand only if the left operand is null
+userName ??= "Anonymous";
+```
+
+### Switch statements and expressions
+
+Switch statements provide a way to handle multiple possible conditions for a single value. Modern C# also offers powerful switch expressions.
+
+```csharp
+// Traditional switch statement
+switch (dayOfWeek)
+{
+    case DayOfWeek.Monday:
+        Console.WriteLine("Start of work week");
+        break;
+    case DayOfWeek.Friday:
+        Console.WriteLine("End of work week");
+        break;
+    case DayOfWeek.Saturday:
+    case DayOfWeek.Sunday:
+        Console.WriteLine("Weekend");
+        break;
+    default:
+        Console.WriteLine("Midweek");
+        break;
+}
+
+// Switch expression (C# 8.0+)
+string GetDayType(DayOfWeek day) => day switch
+{
+    DayOfWeek.Monday => "Start of work week",
+    DayOfWeek.Friday => "End of work week",
+    DayOfWeek.Saturday or DayOfWeek.Sunday => "Weekend",
+    _ => "Midweek"  // Default case
+};
+
+// Switch expression with pattern matching
+string GetShapeDescription(object shape) => shape switch
+{
+    Circle c when c.Radius > 10 => "Large circle",
+    Circle _ => "Circle",
+    Rectangle { Width: 0 } => "Line",
+    Rectangle { Length: var l, Width: var w } when l == w => "Square",
+    Rectangle _ => "Rectangle",
+    null => "No shape",
+    _ => "Unknown shape"
+};
+```
+
+## Loops
+
+Loops allow you to execute a block of code repeatedly until a condition is met.
+
+### For loops
+
+For loops are ideal when you know the number of iterations in advance.
+
+```csharp
+// Basic for loop
+for (int i = 0; i < 10; i++)
+{
+    Console.WriteLine($"Iteration {i}");
+}
+
+// Multiple loop variables
+for (int i = 0, j = 10; i < j; i++, j--)
+{
+    Console.WriteLine($"i = {i}, j = {j}");
+}
+
+// Nested for loops
+for (int i = 0; i < 3; i++)
+{
+    for (int j = 0; j < 3; j++)
+    {
+        Console.WriteLine($"Position [{i},{j}]");
+    }
+}
+
+// Breaking out of a loop
+for (int i = 0; i < 100; i++)
+{
+    if (i > 10)
+        break;  // Exits the loop
+    
+    Console.WriteLine(i);
+}
+
+// Skipping an iteration
+for (int i = 0; i < 10; i++)
+{
+    if (i % 2 == 0)
+        continue;  // Skips to the next iteration
+    
+    Console.WriteLine($"Odd number: {i}");
+}
+```
+
+### Foreach loops
+
+Foreach loops are designed for iterating through collections and are simpler to use than for loops when the iteration count isn't important.
+
+```csharp
+// Basic foreach loop
+foreach (string name in names)
+{
+    Console.WriteLine(name);
+}
+
+// Using index with foreach (C# 9.0+)
+foreach (string name in names.Select((value, index) => new { value, index }))
+{
+    Console.WriteLine($"{name.index}: {name.value}");
+}
+
+// Iterating through key-value pairs
+foreach (KeyValuePair<string, int> pair in dictionary)
+{
+    Console.WriteLine($"{pair.Key}: {pair.Value}");
+}
+
+// Using deconstruction with foreach (C# 7.0+)
+foreach (var (key, value) in dictionary)
+{
+    Console.WriteLine($"{key}: {value}");
+}
+
+// Breaking and continuing also work in foreach
+foreach (var item in collection)
+{
+    if (ShouldSkip(item))
+        continue;
+    
+    if (ShouldStop(item))
+        break;
+    
+    Process(item);
+}
+```
+
+### While and do-while Loops
+
+While loops check the condition before executing the loop body, while do-while loops execute the body at least once before checking the condition.
+
+```csharp
+// While loop - may execute zero times
+while (condition)
+{
+    // Loop body
+}
+
+// Example: reading until a condition is met
+while (!Console.KeyAvailable)
+{
+    // Process until a key is pressed
+    ProcessData();
+}
+
+// Do-while loop - always executes at least once
+do
+{
+    // Loop body
+} while (condition);
+
+// Example: menu system
+string choice;
+do
+{
+    DisplayMenu();
+    choice = Console.ReadLine();
+    ProcessChoice(choice);
+} while (choice != "exit");
+```
+
+## Lock statement
+
+The lock statement prevents multiple threads from accessing a shared resource simultaneously, helping to avoid race conditions in multithreaded code.
+
+```csharp
+// Define a lock object (private to avoid external locking)
+private readonly object _lockObject = new object();
+
+// Using the lock statement
+public void AddItem(string item)
+{
+    lock (_lockObject)
+    {
+        // This code can only be executed by one thread at a time
+        _items.Add(item);
+        _count++;
+    }
+}
+
+// Best practices for locks:
+// 1. Use a private object for locking
+// 2. Keep the locked section as small as possible
+// 3. Avoid locking on 'this' or public objects
+// 4. Don't execute long-running or blocking operations inside a lock
+// 5. Consider using higher-level synchronization primitives for complex scenarios
+```
+
+## Using statement
+
+The `using` statement ensures that disposable resources are properly cleaned up, even if exceptions occur. It's an essential pattern for working with resources like files, network connections, and database connections that need to be explicitly released.
+
+```csharp
+// Traditional using statement
+using (StreamReader reader = new StreamReader("file.txt"))
+{
+    string content = reader.ReadToEnd();
+    // reader is automatically disposed here, even if an exception occurs
+}
+
+// Using declaration (C# 8.0+)
+using StreamWriter writer = new StreamWriter("output.txt");
+writer.WriteLine("Hello, World!");
+// writer is disposed at the end of the scope
+
+// Multiple resources in one using statement
+using (var connection = new SqlConnection(connectionString))
+using (var command = new SqlCommand(queryString, connection))
+{
+    connection.Open();
+    using (var reader = command.ExecuteReader())
+    {
+        // Process data
+    }
+}
+
+// Using declaration with multiple resources (C# 8.0+)
+using var fileStream = new FileStream("data.bin", FileMode.Create);
+using var binaryWriter = new BinaryWriter(fileStream);
+binaryWriter.Write(42);
+// Both binaryWriter and fileStream are disposed at end of scope
+```
+
+## Unsafe code
+
+The unsafe keyword allows you to write code that directly manipulates memory. This is primarily used for performance-critical operations or interop with native code.
+
+```csharp
+// Must enable unsafe code in project settings or compiler options
+// <AllowUnsafeBlocks>true</AllowUnsafeBlocks> in .csproj
+
+// Unsafe method
+public unsafe void ProcessBuffer(byte[] buffer)
+{
+    fixed (byte* ptr = buffer)
+    {
+        // Direct memory manipulation
+        for (int i = 0; i < buffer.Length; i++)
+        {
+            *(ptr + i) = (byte)(*(ptr + i) * 2);
+        }
+    }
+}
+
+// Unsafe context with pointer operations
+unsafe
+{
+    int value = 10;
+    int* pointer = &value;
+    
+    Console.WriteLine($"Value: {*pointer}");
+    
+    // Increment the value through the pointer
+    *pointer = 20;
+    Console.WriteLine($"Updated value: {value}");
+}
+
+// sizeof operator (only allowed in unsafe context)
+unsafe
+{
+    Console.WriteLine($"Size of int: {sizeof(int)} bytes");
+    Console.WriteLine($"Size of double: {sizeof(double)} bytes");
+}
+```
+
+## Yield statement
+
+The yield statement is used in iterator methods to provide values one at a time, enabling deferred execution and efficient handling of sequences.
+
+```csharp
+// Simple iterator method
+public IEnumerable<int> GetNumbers(int count)
+{
+    for (int i = 0; i < count; i++)
+    {
+        yield return i;
+    }
+}
+
+// Iterator method with conditional logic
+public IEnumerable<int> GetEvenNumbers(int max)
+{
+    for (int i = 0; i <= max; i++)
+    {
+        if (i % 2 == 0)
+        {
+            yield return i;
+        }
+    }
+}
+
+// Yield break to exit early
+public IEnumerable<int> GetNumbersUntil(int max, int stopAt)
+{
+    for (int i = 0; i <= max; i++)
+    {
+        if (i == stopAt)
+        {
+            yield break;  // Exit the iterator
+        }
+        
+        yield return i;
+    }
+}
+
+// Using yield to implement filtering
+public IEnumerable<T> Where<T>(IEnumerable<T> source, Func<T, bool> predicate)
+{
+    foreach (var item in source)
+    {
+        if (predicate(item))
+        {
+            yield return item;
+        }
+    }
+}
+```
+
+### Benefits of yield:
+
+1. **Lazy evaluation**: Results are computed only when needed
+2. **Memory efficiency**: No need to build the entire collection at once
+3. **Composability**: Iterator methods can be chained together
+4. **Simplicity**: Easier to write than manually implementing IEnumerator
+
+**Additional resources:**
+- [C# Statements (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/statements)
+- [Control Flow (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/selection-statements)
+- [Iteration statements (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/iteration-statements)
+- [Lock statement (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/lock)
+- [Using statement (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/using)
+- [Unsafe code (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/unsafe)
+- [Yield (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/yield)
 
 <div id="methods-and-functions"></div>
 
@@ -1816,43 +2225,6 @@ Exception handling has performance implications that should be considered in you
 - [Creating and throwing Exceptions (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/exceptions/how-to-create-user-defined-exceptions)
 - [IDisposable pattern (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-dispose)
 - [Exception handling in async code (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/asynchronous-programming-patterns/exception-handling-task-asynchronous-pattern)
-
-<div id="using-statement"></div>
-
-# Using statement
-
-The `using` statement ensures that disposable resources are properly cleaned up, even if exceptions occur. It's an essential pattern for working with resources like files, network connections, and database connections that need to be explicitly released.
-
-```csharp
-// Traditional using statement
-using (StreamReader reader = new StreamReader("file.txt"))
-{
-    string content = reader.ReadToEnd();
-    // reader is automatically disposed here, even if an exception occurs
-}
-
-// Using declaration (C# 8.0+)
-using StreamWriter writer = new StreamWriter("output.txt");
-writer.WriteLine("Hello, World!");
-// writer is disposed at the end of the scope
-
-// Multiple resources in one using statement
-using (var connection = new SqlConnection(connectionString))
-using (var command = new SqlCommand(queryString, connection))
-{
-    connection.Open();
-    using (var reader = command.ExecuteReader())
-    {
-        // Process data
-    }
-}
-
-// Using declaration with multiple resources (C# 8.0+)
-using var fileStream = new FileStream("data.bin", FileMode.Create);
-using var binaryWriter = new BinaryWriter(fileStream);
-binaryWriter.Write(42);
-// Both binaryWriter and fileStream are disposed at end of scope
-```
 
 <div id="asynchronous-programming"></div>
 
