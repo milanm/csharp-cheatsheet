@@ -324,7 +324,7 @@ Statements are the building blocks of C# code execution, controlling the flow of
 
 Control flow statements allow you to make decisions and execute different code paths based on conditions.
 
-### If-Else statements
+### If-else statements
 
 If-else statements execute different code blocks based on boolean conditions. They form the foundation of decision-making in C#.
 
