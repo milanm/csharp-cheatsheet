@@ -513,7 +513,7 @@ foreach (var item in collection)
 }
 ```
 
-### While and do-while Loops
+### While and do-while loops
 
 While loops check the condition before executing the loop body, while do-while loops execute the body at least once before checking the condition.
 
@@ -2042,7 +2042,7 @@ var (name, _) = person; // Discard the age
 
 Exception handling is a critical aspect of robust C# applications, which allows you to manage errors and unexpected conditions. Well-designed exception handling balances providing useful feedback to users, maintaining application stability, and preserving valuable diagnostic information for developers.
 
-## Try-Catch-Finally
+## Try-catch-finally
 
 The try-catch-finally pattern forms the backbone of exception handling in C#. Code that might throw exceptions is placed in the `try` block, specific exception types are caught and handled in `catch` blocks, and cleanup code that should always execute (regardless of exceptions) goes in the `finally` block.
 
