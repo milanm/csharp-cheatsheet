@@ -1906,6 +1906,7 @@ var queryResult = from n in numbers
 - [Collections overview (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/collections/)
 - [Collection expressions (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/collection-expressions)
 - [LINQ (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/concepts/linq/)
+- [IEnumerable and IQueryable](https://dotnettutorials.net/lesson/differences-between-ienumerable-and-iqueryable/)
 - [Choosing a collection type (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/standard/collections/selecting-a-collection-class)
 - [System.Collections.Generic Namespace (Microsoft Docs)](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic)
 
