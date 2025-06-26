@@ -1,5 +1,21 @@
 # C# Programming Cheat Sheet (2025 Edition)
 
+## [Grab my .NET Ultimate Bundle for 2025 (500+ pages and a course)](https://www.patreon.com/techworld_with_milan/shop/ultimate-net-bundle-for-2025-1519389)
+
+* A brief walk through the .NET ecosystem 
+* Modern C# v6‑13 features
+* 200+ interview Q\&As that hiring managers ask
+* 50+ real‑world design patterns in C#
+* Clean code development in C# course
+* ASP.NET Core auth  & middleware best practices
+* Bonus: A complete C# Cheat Sheet
+
+[Get the .NET Ultimate Bundle 🚀](https://www.patreon.com/techworld_with_milan/shop/ultimate-net-bundle-for-2025-1519389)
+
+[![.NET Ultimate Bundle](Bundle.png)](https://www.patreon.com/techworld_with_milan/shop/ultimate-net-bundle-for-2025-1519389)
+
+If you want to learn more about C# and .NET technologies, be sure to subscribe to **[my newsletter](https://newsletter.techworld-with-milan.com/)**.
+
 ## Introduction
 
 This comprehensive C# cheat sheet serves as a quick reference guide for C# developers at all skill levels. It covers the core language features, modern patterns, and best practices as of 2025. 
